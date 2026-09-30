@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Coffee Evening ☕</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+    background:
+        radial-gradient(circle at top,#4c1d95,#111827 55%,#030712);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    overflow:hidden;
+}
+
+.card{
+    width:min(94vw,520px);
+    max-height:94vh;
+    overflow:auto;
+
+    background:rgba(17,24,39,.92);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:28px;
+
+    padding:28px 22px;
+
+    text-align:center;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.5);
+
+    animation:in .45s ease;
+}
+
+@keyframes in{
+
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
+
+}
+
+.emoji{
+    font-size:52px;
+}
+
+.hidden{
+    display:none!important;
+}
+
+h1{
+    font-size:28px;
+    margin:10px 0;
+}
+
+.sub{
+    color:#cbd5e1;
+    line-height:1.55;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin:28px 0;
+    min-height:56px;
+
+    position:relative;
+}
+
+button{
+    border:0;
+    border-radius:14px;
+    padding:14px 20px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+
+    transition:
+        transform .18s,
+        left .18s,
+        top .18s;
+}
+
+button:hover{
+    transform:translateY(-2px) scale(1.03);
+}
+
+.yes{
+    background:#22c55e;
+    color:#fff;
+}
+
+.no{
+    background:#ef4444;
+    color:#fff;
+}
+
+/*
+    IMPORTANT:
+    Once the NO button starts dodging,
+    it is removed from the card and attached
+    to the screen instead.
+*/
+
+.dodging{
+    position:fixed !important;
+    z-index:9999;
+
+    margin:0;
+
+    transition:
+        left .16s ease,
+        top .16s ease;
+}
+
+.primary{
+    background:#6366f1;
+    color:#fff;
+}
+
+.calendar{
+    margin:22px 0;
+}
+
+.month{
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:14px;
+}
+
+.weekdays,
+.days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:6px;
+}
+
+.weekdays div{
+    font-size:11px;
+    color:#94a3b8;
+}
+
+.day{
+    aspect-ratio:1;
+    border-radius:10px;
+
+    background:#263244;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    padding:0;
+}
+
+.day:hover{
+    background:#4338ca;
+}
+
+.day.selected{
+    background:#22c55e;
+
+    box-shadow:
+        0 0 18px rgba(34,197,94,.45);
+}
+
+.empty{
+    visibility:hidden;
+}
+
+.time{
+    width:100%;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    margin:12px 0 20px;
+}
+
+.notice{
+    font-size:13px;
+    color:#94a3b8;
+    margin-top:14px;
+}
+
+.success{
+    font-size:21px;
+    line-height:1.55;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+<!-- =====================================================
+     PAGE 1
+===================================================== -->
+
+<section id="p1">
+
+    <div class="emoji">
+        ☕👀
+    </div>
+
+
+    <h1>
+        Extremely Serious Question.
+    </h1>
+
+
+    <p class="sub">
+        Would you join me for a coffee evening?
+    </p>
+
+
+    <p class="sub">
+        Please answer responsibly.
+        My imaginary legal team is watching. 😂
+    </p>
+
+
+    <div class="buttons">
+
+        <button
+            class="yes"
+            onclick="yes()"
+        >
+            YES 😌
+        </button>
+
+
+        <button
+            class="no"
+            id="no"
+        >
+            NO 😭
+        </button>
+
+    </div>
+
+
+    <p class="notice">
+        No hidden tracking.
+        Your answer is only sent when you press Submit.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 2
+===================================================== -->
+
+<section id="p2" class="hidden">
+
+    <div class="emoji">
+        💀
+    </div>
+
+
+    <h1>
+        WAIT. YOU SAID YES?
+    </h1>
+
+
+    <p class="sub">
+        I had a rejection speech ready.
+    </p>
+
+
+    <p class="sub">
+        <b>
+            Page 47 of the emotional damage manual:
+        </b>
+        completely unused.
+    </p>
+
+
+    <button
+        class="primary"
+        onclick="calendarPage()"
+    >
+        Proceed to the highly classified calendar ☕
+    </button>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 3
+===================================================== -->
+
+<section id="p3" class="hidden">
+
+    <div class="emoji">
+        📅
+    </div>
+
+
+    <h1>
+        Choose Your Coffee-Era Date
+    </h1>
+
+
+    <p class="sub">
+        Pick one future day in October 2026.
+    </p>
+
+
+    <div class="calendar">
+
+        <div class="month">
+            October 2026
+        </div>
+
+
+        <div class="weekdays">
+
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+
+        </div>
+
+
+        <div
+            id="days"
+            class="days"
+        ></div>
+
+    </div>
+
+
+    <p
+        id="chosen"
+        class="sub"
+    >
+        No date selected.
+        The calendar is judging us. 👀
+    </p>
+
+
+    <button
+        id="dateNext"
+        class="primary hidden"
+        onclick="timePage()"
+    >
+        Continue → ⏰
+    </button>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 4
+===================================================== -->
+
+<section id="p4" class="hidden">
+
+    <div class="emoji">
+        ⏰
+    </div>
+
+
+    <h1>
+        What Time?
+    </h1>
+
+
+    <p class="sub">
+        Because apparently this operation
+        has become fully organized.
+    </p>
+
+
+    <input
+        class="time"
+        id="time"
+        type="time"
+    >
+
+
+    <button
+        class="primary"
+        onclick="review()"
+    >
+        Review Booking 🫡
+    </button>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 5
+===================================================== -->
+
+<section id="p5" class="hidden">
+
+    <div class="emoji">
+        🧾
+    </div>
+
+
+    <h1>
+        Final Confirmation
+    </h1>
+
+
+    <div
+        id="reviewText"
+        class="success"
+    ></div>
+
+
+    <p class="notice">
+        Press Submit to send this response.
+        The response is sent only after you choose to submit it.
+    </p>
+
+
+    <button
+        class="primary"
+        onclick="submitResponse()"
+    >
+        SUBMIT ☕🚀
+    </button>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAGE 6
+===================================================== -->
+
+<section id="p6" class="hidden">
+
+    <div class="emoji">
+        🎉
+    </div>
+
+
+    <h1>
+        TRANSMISSION SENT.
+    </h1>
+
+
+    <div
+        id="finalText"
+        class="success"
+    ></div>
+
+
+    <p class="notice">
+        The coffee department has received
+        your official paperwork. 😂
+    </p>
+
+</section>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   GOOGLE APPS SCRIPT
+===================================================== */
+
+const ENDPOINT =
+"https://script.google.com/macros/s/AKfycbwSuCFhu5GQRU4Yqfu9XtznV7gZ_3LuI-gqdejXY0g8YgOXhCoPsEYHswy3CEGuj_PFtw/exec";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let selectedDay = null;
+
+let selectedDateISO = null;
+
+let selectedTime = null;
+
+
+/* =====================================================
+   NO BUTTON
+===================================================== */
+
+const noBtn =
+    document.getElementById("no");
+
+
+let noAttempts = 0;
+
+
+const noMessages = [
+
+    "NO 😭",
+
+    "WAIT 😂",
+
+    "BRO 😂",
+
+    "WHY ARE YOU STILL TRYING 😭",
+
+    "JUST SAY YES 😂",
+
+    "YOU CAN'T CATCH ME 😭",
+
+    "BRO PLEASE 💀",
+
+    "OKAY THIS IS GETTING EMBARRASSING 😂"
+
+];
+
+
+function dodgeNoButton(){
+
+    noAttempts++;
+
+
+    /*
+        Change the funny message.
+    */
+
+    noBtn.textContent =
+        noMessages[
+            Math.min(
+                noAttempts,
+                noMessages.length - 1
+            )
+        ];
+
+
+    /*
+        Move the button OUTSIDE the card.
+    */
+
+    noBtn.classList.add(
+        "dodging"
+    );
+
+
+    const padding = 18;
+
+
+    const buttonWidth =
+        noBtn.offsetWidth;
+
+
+    const buttonHeight =
+        noBtn.offsetHeight;
+
+
+    const maxX =
+        Math.max(
+            padding,
+            window.innerWidth -
+            buttonWidth -
+            padding
+        );
+
+
+    const maxY =
+        Math.max(
+            padding,
+            window.innerHeight -
+            buttonHeight -
+            padding
+        );
+
+
+    const x =
+        Math.floor(
+            Math.random() *
+            (maxX - padding + 1)
+        ) + padding;
+
+
+    const y =
+        Math.floor(
+            Math.random() *
+            (maxY - padding + 1)
+        ) + padding;
+
+
+    noBtn.style.left =
+        x + "px";
+
+
+    noBtn.style.top =
+        y + "px";
+
+}
+
+
+/*
+    Computer:
+    Move when the cursor reaches it.
+*/
+
+noBtn.addEventListener(
+    "mouseenter",
+    dodgeNoButton
+);
+
+
+/*
+    Android:
+    Move when she tries to tap it.
+*/
+
+noBtn.addEventListener(
+    "touchstart",
+    function(event){
+
+        event.preventDefault();
+
+        dodgeNoButton();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/*
+    Also catch clicks just in case
+    the browser manages to activate it.
+*/
+
+noBtn.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+        dodgeNoButton();
+
+    }
+);
+
+
+/* =====================================================
+   PAGE SWITCHING
+===================================================== */
+
+function show(id){
+
+    document
+        .querySelectorAll("section")
+        .forEach(
+            function(section){
+
+                section.classList.add(
+                    "hidden"
+                );
+
+            }
+        );
+
+
+    document
+        .getElementById(id)
+        .classList.remove(
+            "hidden"
+        );
+
+}
+
+
+/* =====================================================
+   YES
+===================================================== */
+
+function yes(){
+
+    /*
+        Reset the NO button so it doesn't
+        remain floating over the next page.
+    */
+
+    noBtn.classList.remove(
+        "dodging"
+    );
+
+
+    noBtn.style.left = "";
+
+    noBtn.style.top = "";
+
+
+    show("p2");
+
+}
+
+
+/* =====================================================
+   CALENDAR PAGE
+===================================================== */
+
+function calendarPage(){
+
+    show("p3");
+
+    buildCalendar();
+
+}
+
+
+/* =====================================================
+   TIME PAGE
+===================================================== */
+
+function timePage(){
+
+    show("p4");
+
+}
+
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+function buildCalendar(){
+
+    const box =
+        document.getElementById("days");
+
+
+    box.innerHTML = "";
+
+
+    /*
+        October 1, 2026 is Thursday.
+    */
+
+    const firstDay =
+        new Date(
+            2026,
+            9,
+            1
+        ).getDay();
+
+
+    for(
+        let i = 0;
+        i < firstDay;
+        i++
+    ){
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "empty";
+
+        box.appendChild(
+            empty
+        );
+
+    }
+
+
+    for(
+        let d = 1;
+        d <= 31;
+        d++
+    ){
+
+        const el =
+            document.createElement("div");
+
+
+        el.className =
+            "day";
+
+
+        el.textContent =
+            d;
+
+
+        el.onclick =
+            function(){
+
+                document
+                    .querySelectorAll(".day")
+                    .forEach(
+                        function(x){
+
+                            x.classList.remove(
+                                "selected"
+                            );
+
+                        }
+                    );
+
+
+                el.classList.add(
+                    "selected"
+                );
+
+
+                selectedDay =
+                    d;
+
+
+                /*
+                    Use local date instead of
+                    toISOString so the date cannot
+                    shift because of timezone.
+                */
+
+                const month =
+                    "10";
+
+
+                const day =
+                    String(d)
+                    .padStart(2,"0");
+
+
+                selectedDateISO =
+                    "2026-" +
+                    month +
+                    "-" +
+                    day;
+
+
+                const date =
+                    new Date(
+                        2026,
+                        9,
+                        d
+                    );
+
+
+                document
+                    .getElementById(
+                        "chosen"
+                    )
+                    .innerHTML =
+                    "<b>" +
+                    date.toLocaleDateString(
+                        "en-US",
+                        {
+                            weekday:"long",
+                            month:"long",
+                            day:"numeric"
+                        }
+                    ) +
+                    "</b> selected." +
+                    " Excellent." +
+                    " The coffee satellites are aligned. 🛰️";
+
+
+                document
+                    .getElementById(
+                        "dateNext"
+                    )
+                    .classList.remove(
+                        "hidden"
+                    );
+
+            };
+
+
+        box.appendChild(
+            el
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   TIME FORMAT
+===================================================== */
+
+function formatTime(t){
+
+    let [
+        h,
+        m
+    ] =
+        t.split(":")
+        .map(Number);
+
+
+    const ap =
+        h >= 12
+        ? "PM"
+        : "AM";
+
+
+    h =
+        h % 12 || 12;
+
+
+    return (
+        h +
+        ":" +
+        String(m).padStart(2,"0") +
+        " " +
+        ap
+    );
+
+}
+
+
+/* =====================================================
+   REVIEW
+===================================================== */
+
+function review(){
+
+    const t =
+        document
+        .getElementById("time")
+        .value;
+
+
+    if(!selectedDateISO){
+
+        alert(
+            "Pick a date first, captain. 📅"
+        );
+
+        return;
+
+    }
+
+
+    if(!t){
+
+        alert(
+            "The time machine needs a time. ⏰"
+        );
+
+        return;
+
+    }
+
+
+    selectedTime =
+        t;
+
+
+    const date =
+        new Date(
+            selectedDateISO +
+            "T12:00:00"
+        );
+
+
+    document
+        .getElementById(
+            "reviewText"
+        )
+        .innerHTML =
+
+        "☕ <b>" +
+
+        date.toLocaleDateString(
+            "en-US",
+            {
+                weekday:"long",
+                month:"long",
+                day:"numeric"
+            }
+        ) +
+
+        "</b><br>" +
+
+        "⏰ <b>" +
+
+        formatTime(t) +
+
+        "</b><br><br>" +
+
+        "Everything looks suspiciously official.";
+
+
+    show("p5");
+
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+async function submitResponse(){
+
+    if(
+        ENDPOINT.includes(
+            "PASTE_YOUR"
+        )
+    ){
+
+        alert(
+            "The app is in demo mode. Add your Google Apps Script Web App URL first."
+        );
+
+        return;
+
+    }
+
+
+    const date =
+        new Date(
+            selectedDateISO +
+            "T12:00:00"
+        );
+
+
+    const payload = {
+
+        response:"Yes",
+
+        date:
+            selectedDateISO,
+
+        dateLabel:
+            date.toLocaleDateString(
+                "en-US",
+                {
+                    weekday:"long",
+                    month:"long",
+                    day:"numeric"
+                }
+            ),
+
+        time:
+            selectedTime,
+
+        timeLabel:
+            formatTime(
+                selectedTime
+            ),
+
+        source:
+            "Coffee Evening"
+
+    };
+
+
+    try{
+
+        const response =
+            await fetch(
+                ENDPOINT,
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            payload
+                        ),
+
+                    mode:"cors"
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Submission failed"
+            );
+
+        }
+
+
+        document
+            .getElementById(
+                "finalText"
+            )
+            .innerHTML =
+
+            "See you on <b>" +
+
+            payload.dateLabel +
+
+            "</b> at <b>" +
+
+            payload.timeLabel +
+
+            "</b>. 😎" +
+
+            "<br><br>" +
+
+            "Booking status: " +
+
+            "<b>" +
+
+            "LEGALLY UNOFFICIAL, " +
+            "EMOTIONALLY CONFIRMED."
+
+            +
+
+            "</b> 😂";
+
+
+        show("p6");
+
+    }
+
+
+    catch(error){
+
+        alert(
+            "The coffee satellites lost signal. Please try again. 📡"
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
