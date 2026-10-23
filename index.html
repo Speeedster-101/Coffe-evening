@@ -2,1178 +2,1315 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6f4e37">
 <title>Coffee Evening ☕</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
+:root {
+  --coffee: #6f4e37;
+  --espresso: #2b1d17;
+  --cream: #fff8f0;
+  --latte: #ead7c0;
+  --coral: #e76f51;
+  --green: #3c8060;
+  --ink: #34241d;
+  --muted: #78665b;
 }
 
-body{
-    margin:0;
-    min-height:100vh;
-    font-family:system-ui,-apple-system,Segoe UI,sans-serif;
-    background:
-        radial-gradient(circle at top,#4c1d95,#111827 55%,#030712);
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:18px;
-    overflow:hidden;
+* {
+  box-sizing: border-box;
 }
 
-.card{
-    width:min(94vw,520px);
-    max-height:94vh;
-    overflow:auto;
-
-    background:rgba(17,24,39,.92);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:28px;
-
-    padding:28px 22px;
-
-    text-align:center;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.5);
-
-    animation:in .45s ease;
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 5%, #f5dfc8 0, transparent 32%),
+    linear-gradient(145deg, #fff8f0, #ead7c0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  overflow-x: hidden;
 }
 
-@keyframes in{
-
-    from{
-        opacity:0;
-        transform:translateY(15px) scale(.97);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-    }
-
+body:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .22;
+  background-image: radial-gradient(#6f4e37 .6px, transparent .6px);
+  background-size: 16px 16px;
 }
 
-.emoji{
-    font-size:52px;
+.card {
+  position: relative;
+  width: min(100%, 560px);
+  max-height: calc(100dvh - 36px);
+  overflow: auto;
+  background: rgba(255, 252, 247, .96);
+  border: 1px solid rgba(111, 78, 55, .16);
+  border-radius: 28px;
+  padding: clamp(22px, 5vw, 34px);
+  text-align: center;
+  box-shadow: 0 24px 70px #51311d25;
+  animation: rise .45s ease;
 }
 
-.hidden{
-    display:none!important;
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-h1{
-    font-size:28px;
-    margin:10px 0;
+.hidden {
+  display: none !important;
 }
 
-.sub{
-    color:#cbd5e1;
-    line-height:1.55;
+.cup {
+  font-size: 54px;
+  line-height: 1.2;
+  display: inline-block;
+  animation: bob 3s ease-in-out infinite;
 }
 
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:14px;
-    margin:28px 0;
-    min-height:56px;
-
-    position:relative;
+@keyframes bob {
+  50% {
+    transform: translateY(-5px) rotate(-3deg);
+  }
 }
 
-button{
-    border:0;
-    border-radius:14px;
-    padding:14px 20px;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-
-    transition:
-        transform .18s,
-        left .18s,
-        top .18s;
+h1 {
+  font-size: clamp(25px, 6vw, 32px);
+  line-height: 1.15;
+  margin: 14px 0 12px;
+  letter-spacing: -.7px;
 }
 
-button:hover{
-    transform:translateY(-2px) scale(1.03);
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  font-weight: 850;
+  color: var(--coffee);
 }
 
-.yes{
-    background:#22c55e;
-    color:#fff;
+.sub {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 10px 0;
 }
 
-.no{
-    background:#ef4444;
-    color:#fff;
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 25px 0 18px;
 }
 
-/*
-    IMPORTANT:
-    Once the NO button starts dodging,
-    it is removed from the card and attached
-    to the screen instead.
-*/
-
-.dodging{
-    position:fixed !important;
-    z-index:9999;
-
-    margin:0;
-
-    transition:
-        left .16s ease,
-        top .16s ease;
+button,
+.button {
+  font: inherit;
+  font-weight: 750;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 19px;
+  min-height: 48px;
+  cursor: pointer;
+  transition:
+    transform .16s,
+    filter .16s,
+    box-shadow .16s;
 }
 
-.primary{
-    background:#6366f1;
-    color:#fff;
+button:active {
+  transform: scale(.97);
 }
 
-.calendar{
-    margin:22px 0;
+button:hover {
+  filter: brightness(1.03);
 }
 
-.month{
-    font-size:21px;
-    font-weight:800;
-    margin-bottom:14px;
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #e76f51;
+  outline-offset: 3px;
 }
 
-.weekdays,
-.days{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:6px;
+.yes {
+  background: var(--green);
+  color: white;
+  box-shadow: 0 7px 0 #275b42;
 }
 
-.weekdays div{
-    font-size:11px;
-    color:#94a3b8;
+.no {
+  background: #f5d8d0;
+  color: #963c2b;
+  border: 1px solid #eab6a8;
 }
 
-.day{
-    aspect-ratio:1;
-    border-radius:10px;
-
-    background:#263244;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    cursor:pointer;
-
-    padding:0;
+/* The NO button can escape its original container. */
+.no.escaping {
+  position: fixed;
+  z-index: 1001;
+  margin: 0;
+  min-width: 105px;
+  box-shadow: 0 8px 24px #51311d35;
+  transition:
+    left .22s cubic-bezier(.2, .8, .2, 1),
+    top .22s cubic-bezier(.2, .8, .2, 1),
+    transform .16s,
+    filter .16s;
+  touch-action: manipulation;
 }
 
-.day:hover{
-    background:#4338ca;
+.primary {
+  background: var(--coffee);
+  color: white;
+  box-shadow: 0 7px 0 #4d3526;
 }
 
-.day.selected{
-    background:#22c55e;
-
-    box-shadow:
-        0 0 18px rgba(34,197,94,.45);
+.secondary {
+  background: #f1e4d6;
+  color: var(--ink);
 }
 
-.empty{
-    visibility:hidden;
+.wide {
+  width: 100%;
+  margin-top: 10px;
 }
 
-.time{
-    width:100%;
-
-    padding:15px;
-
-    border:0;
-
-    border-radius:12px;
-
-    font-size:18px;
-
-    margin:12px 0 20px;
+.notice {
+  font-size: 12px;
+  color: #907e71;
+  line-height: 1.5;
+  margin-top: 20px;
 }
 
-.notice{
-    font-size:13px;
-    color:#94a3b8;
-    margin-top:14px;
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #f4e7da;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 750;
+  color: var(--coffee);
 }
 
-.success{
-    font-size:21px;
-    line-height:1.55;
+.field {
+  text-align: left;
+  margin: 18px 0;
 }
 
+.field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.field input[type=date],
+.field textarea {
+  width: 100%;
+  border: 1px solid #dcc8b5;
+  border-radius: 13px;
+  background: white;
+  padding: 14px;
+  font: inherit;
+  color: var(--ink);
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.choice {
+  padding: 12px 8px;
+  background: #f4e8dc;
+  color: var(--ink);
+  border: 1px solid #e5d2c0;
+  font-size: 14px;
+}
+
+.choice.selected {
+  background: #d9eadc;
+  border: 2px solid var(--green);
+  padding: 11px 7px;
+  box-shadow: 0 0 0 2px #d9eadc;
+}
+
+.vibes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.vibe {
+  background: #f4e8dc;
+  color: var(--ink);
+  border: 1px solid #e5d2c0;
+  text-align: left;
+  padding: 13px;
+  font-size: 13px;
+}
+
+.vibe.selected {
+  background: #d9eadc;
+  border: 2px solid var(--green);
+  padding: 12px;
+}
+
+.summary {
+  background: #fbf0e4;
+  border: 1px solid #ead6c3;
+  border-radius: 17px;
+  text-align: left;
+  padding: 16px;
+  margin: 18px 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #ead9c8;
+  font-size: 14px;
+}
+
+.summary-row:last-child {
+  border-bottom: 0;
+}
+
+.summary-row span:first-child {
+  color: var(--muted);
+}
+
+.summary-row strong {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.text-link {
+  border: 0;
+  background: transparent;
+  color: var(--coffee);
+  text-decoration: underline;
+  padding: 8px;
+  min-height: auto;
+}
+
+.progress {
+  height: 5px;
+  border-radius: 9px;
+  background: #ead8c6;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--coral);
+  transition: width .3s;
+}
+
+/* NEW: small floating glass toast instead of a blocking modal. */
+.toast-popup {
+  position: fixed;
+  z-index: 1000;
+  width: min(320px, calc(100vw - 32px));
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 17px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 18px;
+  color: var(--ink);
+  background: rgba(255, 248, 240, .76);
+  box-shadow: 0 12px 38px rgba(43, 29, 23, .18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  transform: translateY(8px) scale(.96);
+  pointer-events: none;
+  transition:
+    opacity .28s ease,
+    transform .28s ease;
+  overflow-wrap: anywhere;
+}
+
+.toast-popup.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.toast-icon {
+  flex: 0 0 auto;
+  font-size: 27px;
+  line-height: 1.25;
+}
+
+.toast-content {
+  min-width: 0;
+  text-align: left;
+}
+
+.toast-content strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: .25px;
+}
+
+.toast-content p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 5px 0 0;
+}
+
+.error-banner {
+  padding: 12px;
+  border-radius: 12px;
+  background: #fbe4df;
+  color: #8c2f20;
+  font-size: 14px;
+  text-align: left;
+  margin: 12px 0;
+}
+
+.success-icon {
+  font-size: 62px;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+.steam {
+  display: inline-block;
+  animation: steam 1.6s ease-in-out infinite;
+}
+
+@keyframes steam {
+  50% {
+    transform: translateY(-7px);
+    opacity: .55;
+  }
+}
+
+footer {
+  font-size: 11px;
+  color: #9a8677;
+  margin-top: 24px;
+}
+
+@media(max-width: 380px) {
+  .choice-grid {
+    gap: 6px;
+  }
+
+  .choice {
+    font-size: 12px;
+    padding: 10px 3px;
+  }
+
+  .vibe {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .card {
+    border-radius: 22px;
+  }
+
+  .toast-popup {
+    width: min(290px, calc(100vw - 24px));
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
 </style>
 </head>
 
-
 <body>
 
+<main class="card">
 
-<div class="card">
+  <div class="progress" aria-hidden="true">
+    <span id="progress"></span>
+  </div>
 
+  <section id="landing">
+    <div class="cup" aria-hidden="true">☕</div>
+    <div class="eyebrow">A small invitation</div>
+    <h1>Coffee Evening</h1>
+    <p class="sub">One tiny question. Potentially excellent snacks.</p>
+    <p class="sub">A very serious, highly unofficial coffee proposal is waiting inside. 😂</p>
+    <button class="primary wide" onclick="startExperience()">Let's Begin →</button>
+  </section>
 
-<!-- =====================================================
-     PAGE 1
-===================================================== -->
+  <section id="question" class="hidden">
+    <div class="cup" aria-hidden="true">☕👀</div>
+    <div class="eyebrow">Extremely serious question</div>
+    <h1>So... are you coming?</h1>
+    <p class="sub">Would you join me for a coffee evening?</p>
+    <p class="sub">Please answer responsibly. My imaginary legal team is watching. 😂</p>
 
-<section id="p1">
-
-    <div class="emoji">
-        ☕👀
+    <div class="buttons" id="questionButtons">
+      <button class="yes" onclick="chooseAnswer('Yes')">YES 😌</button>
+      <button class="no" id="noBtn" onclick="pressNo()">NO 😭</button>
     </div>
 
-
-    <h1>
-        Extremely Serious Question.
-    </h1>
-
-
-    <p class="sub">
-        Would you join me for a coffee evening?
+    <p class="notice" id="noNotice">
+      The NO button has free will. Its excuses, however, are questionable. 💀
     </p>
+  </section>
 
+  <section id="schedule" class="hidden">
+    <div class="cup" aria-hidden="true">📅</div>
+    <div class="eyebrow">Scheduling department</div>
+    <h1 id="scheduleTitle">Awesome! When are you free?</h1>
+    <p class="sub" id="scheduleSubtitle">Choose a day and a time that works for you.</p>
 
-    <p class="sub">
-        Please answer responsibly.
-        My imaginary legal team is watching. 😂
-    </p>
-
-
-    <div class="buttons">
-
-        <button
-            class="yes"
-            onclick="yes()"
-        >
-            YES 😌
-        </button>
-
-
-        <button
-            class="no"
-            id="no"
-        >
-            NO 😭
-        </button>
-
+    <div class="field">
+      <label for="dateInput">📅 Choose a date</label>
+      <input type="date" id="dateInput">
+      <p class="notice" id="dateHint"></p>
     </div>
 
-
-    <p class="notice">
-        No hidden tracking.
-        Your answer is only sent when you press Submit.
-    </p>
-
-</section>
-
-
-
-<!-- =====================================================
-     PAGE 2
-===================================================== -->
-
-<section id="p2" class="hidden">
-
-    <div class="emoji">
-        💀
+    <div class="field">
+      <label>⏰ Choose a time</label>
+      <div class="choice-grid" id="timeChoices">
+        <button class="choice" data-time="14:00" onclick="selectTime(this)">2:00 PM</button>
+        <button class="choice" data-time="15:00" onclick="selectTime(this)">3:00 PM</button>
+        <button class="choice" data-time="16:00" onclick="selectTime(this)">4:00 PM</button>
+        <button class="choice" data-time="17:00" onclick="selectTime(this)">5:00 PM</button>
+        <button class="choice" data-time="18:00" onclick="selectTime(this)">6:00 PM</button>
+        <button class="choice" data-time="19:00" onclick="selectTime(this)">7:00 PM</button>
+      </div>
     </div>
 
-
-    <h1>
-        WAIT. YOU SAID YES?
-    </h1>
-
-
-    <p class="sub">
-        I had a rejection speech ready.
-    </p>
-
-
-    <p class="sub">
-        <b>
-            Page 47 of the emotional damage manual:
-        </b>
-        completely unused.
-    </p>
-
-
-    <button
-        class="primary"
-        onclick="calendarPage()"
-    >
-        Proceed to the highly classified calendar ☕
-    </button>
-
-</section>
-
-
-
-<!-- =====================================================
-     PAGE 3
-===================================================== -->
-
-<section id="p3" class="hidden">
-
-    <div class="emoji">
-        📅
+    <div class="field">
+      <label>✨ Pick the vibe (optional)</label>
+      <div class="vibes" id="vibeChoices">
+        <button class="vibe" data-vibe="Quiet Coffee & Catch-up" onclick="selectVibe(this)">☕ Quiet Coffee & Catch-up</button>
+        <button class="vibe" data-vibe="Boba / Iced Tea" onclick="selectVibe(this)">🧋 Boba / Iced Tea</button>
+        <button class="vibe" data-vibe="Coffee + Pastries / Dessert" onclick="selectVibe(this)">🍩 Coffee + Pastries</button>
+        <button class="vibe" data-vibe="Coffee To-Go & Walk" onclick="selectVibe(this)">🚶 Coffee To-Go & Walk</button>
+      </div>
     </div>
 
-
-    <h1>
-        Choose Your Coffee-Era Date
-    </h1>
-
-
-    <p class="sub">
-        Pick one future day in October 2026.
-    </p>
-
-
-    <div class="calendar">
-
-        <div class="month">
-            October 2026
-        </div>
-
-
-        <div class="weekdays">
-
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-
-        </div>
-
-
-        <div
-            id="days"
-            class="days"
-        ></div>
-
+    <div class="field">
+      <label for="noteInput">💬 Anything else? (optional)</label>
+      <textarea id="noteInput" maxlength="500" placeholder="A preference, a request, or a very important pastry opinion..."></textarea>
     </div>
 
+    <div id="scheduleError" class="error-banner hidden" role="alert"></div>
 
-    <p
-        id="chosen"
-        class="sub"
-    >
-        No date selected.
-        The calendar is judging us. 👀
-    </p>
+    <button class="primary wide" onclick="goToFinal()">Continue to final message →</button>
+    <button class="text-link" onclick="showPage('question', 2)">← Back to the question</button>
+  </section>
 
+  <section id="final" class="hidden">
+    <div class="cup" aria-hidden="true">🧾</div>
+    <div class="eyebrow">Final paperwork</div>
+    <h1>One last thing...</h1>
+    <p class="sub">Choose a message for the official record.</p>
 
-    <button
-        id="dateNext"
-        class="primary hidden"
-        onclick="timePage()"
-    >
-        Continue → ⏰
-    </button>
+    <div class="summary" id="summary"></div>
 
-</section>
+    <div class="field">
+      <label>💬 Your final message</label>
 
+      <div class="vibes" id="messageChoices">
+        <button class="vibe" data-message="You are annoying." onclick="selectMessage(this)">😂 You are annoying.</button>
+        <button class="vibe" data-message="You're ridiculous." onclick="selectMessage(this)">🤦 You're ridiculous.</button>
+        <button class="vibe" data-message="Okay, okay... I give up." onclick="selectMessage(this)">☕ Okay, I give up.</button>
+        <button class="vibe" data-message="Why did I even click this?" onclick="selectMessage(this)">😭 Why did I click this?</button>
+        <button class="vibe" data-message="You really thought I'd say yes?" onclick="selectMessage(this)">👀 You thought I'd say yes?</button>
+        <button class="vibe" data-message="Fine. You win." onclick="selectMessage(this)">❤️ Fine. You win.</button>
+        <button class="vibe" data-message="__custom__" onclick="selectMessage(this)">✍️ I'll write my own...</button>
+      </div>
 
-
-<!-- =====================================================
-     PAGE 4
-===================================================== -->
-
-<section id="p4" class="hidden">
-
-    <div class="emoji">
-        ⏰
+      <textarea id="customMessage" class="hidden" maxlength="500" placeholder="Write your own message..."></textarea>
     </div>
 
+    <div id="submitError" class="error-banner hidden" role="alert"></div>
 
-    <h1>
-        What Time?
-    </h1>
+    <button id="submitBtn" class="primary wide" onclick="submitResponse()">Submit Response 🚀</button>
+    <button class="text-link" onclick="showPage('schedule', 3)">← Edit date, time, vibe or note</button>
 
+    <p class="notice">Nothing is sent until Submit is pressed.</p>
+  </section>
 
-    <p class="sub">
-        Because apparently this operation
-        has become fully organized.
-    </p>
+  <section id="success" class="hidden">
+    <div class="success-icon" aria-hidden="true"><span class="steam">♨️</span>☕</div>
+    <div class="eyebrow">Transmission complete</div>
+    <h1 id="successTitle">Message received!</h1>
+    <p class="sub" id="successText"></p>
+    <p class="notice">The coffee department has received its official paperwork. 😂</p>
+  </section>
 
+  <footer>Crafted with caffeine & questionable amounts of HTML ☕</footer>
 
-    <input
-        class="time"
-        id="time"
-        type="time"
-    >
+</main>
 
-
-    <button
-        class="primary"
-        onclick="review()"
-    >
-        Review Booking 🫡
-    </button>
-
-</section>
-
-
-
-<!-- =====================================================
-     PAGE 5
-===================================================== -->
-
-<section id="p5" class="hidden">
-
-    <div class="emoji">
-        🧾
-    </div>
-
-
-    <h1>
-        Final Confirmation
-    </h1>
-
-
-    <div
-        id="reviewText"
-        class="success"
-    ></div>
-
-
-    <p class="notice">
-        Press Submit to send this response.
-        The response is sent only after you choose to submit it.
-    </p>
-
-
-    <button
-        class="primary"
-        onclick="submitResponse()"
-    >
-        SUBMIT ☕🚀
-    </button>
-
-</section>
-
-
-
-<!-- =====================================================
-     PAGE 6
-===================================================== -->
-
-<section id="p6" class="hidden">
-
-    <div class="emoji">
-        🎉
-    </div>
-
-
-    <h1>
-        TRANSMISSION SENT.
-    </h1>
-
-
-    <div
-        id="finalText"
-        class="success"
-    ></div>
-
-
-    <p class="notice">
-        The coffee department has received
-        your official paperwork. 😂
-    </p>
-
-</section>
-
-
+<!-- Small floating toast. No backdrop and no buttons to dismiss. -->
+<div
+  id="toastPopup"
+  class="toast-popup hidden"
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
+>
+  <span class="toast-icon" id="toastIcon">👀</span>
+  <div class="toast-content">
+    <strong id="toastTitle"></strong>
+    <p id="toastText"></p>
+  </div>
 </div>
 
-
-
 <script>
+"use strict";
 
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbwSuCFhu5GQRU4Yqfu9XtznV7gZ_3LuI-gqdejXY0g8YgOXhCoPsEYHswy3CEGuj_PFtw/exec";
 
-/* =====================================================
-   GOOGLE APPS SCRIPT
-===================================================== */
-
-const ENDPOINT =
-"https://script.google.com/macros/s/AKfycbwSuCFhu5GQRU4Yqfu9XtznV7gZ_3LuI-gqdejXY0g8YgOXhCoPsEYHswy3CEGuj_PFtw/exec";
-
-
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let selectedDay = null;
-
-let selectedDateISO = null;
-
-let selectedTime = null;
-
-
-/* =====================================================
-   NO BUTTON
-===================================================== */
-
-const noBtn =
-    document.getElementById("no");
-
-
-let noAttempts = 0;
-
-
-const noMessages = [
-
-    "NO 😭",
-
-    "WAIT 😂",
-
-    "BRO 😂",
-
-    "WHY ARE YOU STILL TRYING 😭",
-
-    "JUST SAY YES 😂",
-
-    "YOU CAN'T CATCH ME 😭",
-
-    "BRO PLEASE 💀",
-
-    "OKAY THIS IS GETTING EMBARRASSING 😂"
-
+const noPopups = [
+  [
+    "👀",
+    "OBJECTION!",
+    "Are you sure? We haven't even had the coffee yet!"
+  ],
+  [
+    "☕",
+    "A VERY IMPORTANT ANNOUNCEMENT",
+    "Coffee, good vibes, and absolutely no awkward interviews. Consider the offer."
+  ],
+  [
+    "😭",
+    "THE EFFORT!",
+    "I even made a whole website for this. THE WEBSITE HAS CSS!"
+  ],
+  [
+    "🤨",
+    "PREMIUM OFFER",
+    "You're rejecting a premium coffee experience? In THIS economy?"
+  ],
+  [
+    "📣",
+    "FORMAL OPENING STATEMENT",
+    "Please allow the prosecution to present Exhibit A: coffee and snacks."
+  ],
+  [
+    "🥹",
+    "EXCELLENT DECISION THEORY",
+    "Imagine saying yes. Congratulations, you're already making excellent decisions."
+  ],
+  [
+    "💀",
+    "DEVELOPMENT COSTS",
+    "I've written more code for this invitation than some people write essays."
+  ],
+  [
+    "🛰️",
+    "COFFEE PROPAGANDA",
+    "One coffee. A few laughs. Potentially an elite beverage-related memory."
+  ],
+  [
+    "😭",
+    "NO SUBSCRIPTION REQUIRED",
+    "THE COFFEE ISN'T EVEN ASKING YOU TO PAY A MONTHLY SUBSCRIPTION!"
+  ],
+  [
+    "🤝",
+    "COUNTEROFFER",
+    "You say yes, and I promise not to mention this website more than 47 times."
+  ],
+  [
+    "😂",
+    "THE DIVS ARE DISAPPOINTED",
+    "Even my HTML thinks we deserve a chance. Don't disappoint the divs."
+  ],
+  [
+    "🥲",
+    "PRODUCTION BUDGET",
+    "I've animated buttons, written scripts, and negotiated with CSS. Respect the budget."
+  ],
+  [
+    "🚨",
+    "CRITICAL REJECTION LEVEL",
+    "Rejection levels are rising. The coffee department has requested emergency assistance."
+  ],
+  [
+    "🧎",
+    "FINAL APPEAL",
+    "PLEASE. THINK OF THE COFFEE BEANS. THEY DID NOTHING WRONG."
+  ],
+  [
+    "💀",
+    "SYSTEM ERROR: NO BUTTON OVERLOADED",
+    "15 rejections detected. Coffee.exe has stopped responding. Attempting emergency YES protocol..."
+  ]
 ];
 
+let noAttempts = 0;
+let answer = "";
+let selectedTime = "";
+let selectedVibe = "";
+let selectedMessage = "";
+let isSubmitting = false;
+let popupOnFinal = false;
+let startedAt = null;
 
-function dodgeNoButton(){
+let toastTimer = null;
+let toastHideTimer = null;
+let toastSequence = 0;
+let finalConversionTimer = null;
 
-    noAttempts++;
+const $ = id => document.getElementById(id);
 
-
-    /*
-        Change the funny message.
-    */
-
-    noBtn.textContent =
-        noMessages[
-            Math.min(
-                noAttempts,
-                noMessages.length - 1
-            )
-        ];
-
-
-    /*
-        Move the button OUTSIDE the card.
-    */
-
-    noBtn.classList.add(
-        "dodging"
-    );
-
-
-    const padding = 18;
-
-
-    const buttonWidth =
-        noBtn.offsetWidth;
-
-
-    const buttonHeight =
-        noBtn.offsetHeight;
-
-
-    const maxX =
-        Math.max(
-            padding,
-            window.innerWidth -
-            buttonWidth -
-            padding
-        );
-
-
-    const maxY =
-        Math.max(
-            padding,
-            window.innerHeight -
-            buttonHeight -
-            padding
-        );
-
-
-    const x =
-        Math.floor(
-            Math.random() *
-            (maxX - padding + 1)
-        ) + padding;
-
-
-    const y =
-        Math.floor(
-            Math.random() *
-            (maxY - padding + 1)
-        ) + padding;
-
-
-    noBtn.style.left =
-        x + "px";
-
-
-    noBtn.style.top =
-        y + "px";
-
+function vibrate(ms = 40) {
+  try {
+    if ("vibrate" in navigator) {
+      navigator.vibrate(ms);
+    }
+  } catch (e) {}
 }
 
-
-/*
-    Computer:
-    Move when the cursor reaches it.
-*/
-
-noBtn.addEventListener(
-    "mouseenter",
-    dodgeNoButton
-);
-
-
-/*
-    Android:
-    Move when she tries to tap it.
-*/
-
-noBtn.addEventListener(
-    "touchstart",
-    function(event){
-
-        event.preventDefault();
-
-        dodgeNoButton();
-
-    },
-    {
-        passive:false
-    }
-);
-
-
-/*
-    Also catch clicks just in case
-    the browser manages to activate it.
-*/
-
-noBtn.addEventListener(
-    "click",
-    function(event){
-
-        event.preventDefault();
-
-        dodgeNoButton();
-
-    }
-);
-
-
-/* =====================================================
-   PAGE SWITCHING
-===================================================== */
-
-function show(id){
-
-    document
-        .querySelectorAll("section")
-        .forEach(
-            function(section){
-
-                section.classList.add(
-                    "hidden"
-                );
-
-            }
-        );
-
-
-    document
-        .getElementById(id)
-        .classList.remove(
-            "hidden"
-        );
-
+function startExperience() {
+  startedAt = new Date().toISOString();
+  showPage("question", 1);
+  vibrate(25);
 }
 
+function showPage(id, step) {
+  document.querySelectorAll("main section").forEach(section => {
+    section.classList.add("hidden");
+  });
 
-/* =====================================================
-   YES
-===================================================== */
+  $(id).classList.remove("hidden");
 
-function yes(){
+  const progressWidths = {
+    landing: 0,
+    question: 20,
+    schedule: 50,
+    final: 80,
+    success: 100
+  };
 
-    /*
-        Reset the NO button so it doesn't
-        remain floating over the next page.
-    */
+  $("progress").style.width = (progressWidths[id] || 0) + "%";
 
-    noBtn.classList.remove(
-        "dodging"
+  $("progress").parentElement.classList.toggle(
+    "hidden",
+    id === "landing" || id === "success"
+  );
+
+  $("scheduleError").classList.add("hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+/* -----------------------------------------
+   RANDOM TOAST POPUP SYSTEM
+----------------------------------------- */
+
+function showToast(message, duration = 2600) {
+  const toast = $("toastPopup");
+
+  clearTimeout(toastTimer);
+  clearTimeout(toastHideTimer);
+
+  const currentSequence = ++toastSequence;
+
+  $("toastIcon").textContent = message[0];
+  $("toastTitle").textContent = message[1];
+  $("toastText").textContent = message[2];
+
+  // Reset the previous position before measuring the new toast.
+  toast.classList.remove("show");
+  toast.classList.remove("hidden");
+
+  toast.style.left = "12px";
+  toast.style.right = "auto";
+  toast.style.top = "12px";
+  toast.style.bottom = "auto";
+
+  // Allow the browser to calculate the toast's dimensions.
+  requestAnimationFrame(() => {
+    if (currentSequence !== toastSequence) return;
+
+    const rect = toast.getBoundingClientRect();
+
+    const margin = 12;
+    const safeTop = Math.max(
+      margin,
+      Number.parseInt(
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("padding-top"),
+        10
+      ) || 0
     );
 
+    const maxLeft = Math.max(
+      margin,
+      window.innerWidth - rect.width - margin
+    );
 
+    const maxTop = Math.max(
+      safeTop,
+      window.innerHeight - rect.height - margin
+    );
+
+    // Randomly choose a screen position.
+    // The toast remains fully inside the visible viewport.
+    const positions = [
+      () => ({
+        left: margin,
+        top: safeTop
+      }),
+      () => ({
+        left: maxLeft,
+        top: safeTop
+      }),
+      () => ({
+        left: margin,
+        top: maxTop
+      }),
+      () => ({
+        left: maxLeft,
+        top: maxTop
+      }),
+      () => ({
+        left: Math.max(
+          margin,
+          Math.min(
+            maxLeft,
+            (window.innerWidth - rect.width) / 2
+          )
+        ),
+        top: Math.max(
+          safeTop,
+          Math.min(
+            maxTop,
+            window.innerHeight * 0.35
+          )
+        )
+      })
+    ];
+
+    const position =
+      positions[Math.floor(Math.random() * positions.length)]();
+
+    toast.style.left = position.left + "px";
+    toast.style.top = position.top + "px";
+
+    requestAnimationFrame(() => {
+      if (currentSequence !== toastSequence) return;
+
+      toast.classList.add("show");
+    });
+  });
+
+  toastTimer = setTimeout(() => {
+    if (currentSequence !== toastSequence) return;
+
+    toast.classList.remove("show");
+
+    toastHideTimer = setTimeout(() => {
+      if (currentSequence !== toastSequence) return;
+
+      toast.classList.add("hidden");
+    }, 350);
+
+  }, duration);
+}
+
+/* -----------------------------------------
+   THE ESCAPING NO BUTTON
+----------------------------------------- */
+
+function moveNoButton() {
+  const noBtn = $("noBtn");
+
+  if (!noBtn || noBtn.dataset.converted === "true") {
+    return;
+  }
+
+  // Remove the button from its normal flex layout.
+  noBtn.classList.add("escaping");
+
+  const rect = noBtn.getBoundingClientRect();
+
+  const margin = 12;
+
+  const minX = margin;
+  const minY = margin;
+
+  const maxX = Math.max(
+    minX,
+    window.innerWidth - rect.width - margin
+  );
+
+  const maxY = Math.max(
+    minY,
+    window.innerHeight - rect.height - margin
+  );
+
+  // Generate a random position within the screen.
+  let x = minX;
+  let y = minY;
+
+  const currentX = rect.left;
+  const currentY = rect.top;
+
+  // Try several positions so the button doesn't simply
+  // reappear almost exactly where it was.
+  for (let attempt = 0; attempt < 15; attempt++) {
+    x = minX + Math.random() * (maxX - minX);
+    y = minY + Math.random() * (maxY - minY);
+
+    const distance = Math.hypot(
+      x - currentX,
+      y - currentY
+    );
+
+    if (distance > 110) {
+      break;
+    }
+  }
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+function convertNoToYes() {
+  const noBtn = $("noBtn");
+
+  if (!noBtn) return;
+
+  clearTimeout(finalConversionTimer);
+
+  popupOnFinal = true;
+
+  noBtn.dataset.converted = "true";
+
+  noBtn.classList.remove("no");
+  noBtn.classList.add("yes");
+
+  noBtn.textContent = "YES 😌";
+
+  // Keep it in its escaped position, but make it a working YES.
+  noBtn.onclick = function () {
+    chooseAnswer("Yes");
+  };
+
+  $("noNotice").textContent =
+    "SYSTEM RECOVERY COMPLETE. TWO YES BUTTONS DETECTED. ☕";
+
+  vibrate([60, 40, 100]);
+}
+
+function pressNo() {
+  if (popupOnFinal) return;
+
+  noAttempts++;
+
+  vibrate(40);
+
+  const message = noPopups[
+    Math.min(noAttempts - 1, noPopups.length - 1)
+  ];
+
+  // Every NO press gets its own small floating message.
+  showToast(message, noAttempts === 15 ? 3500 : 2500);
+
+  // The button escapes after each press, until conversion.
+  if (noAttempts < 15) {
+    moveNoButton();
+    return;
+  }
+
+  // The final NO press triggers the system-error sequence.
+  $("noNotice").textContent =
+    "CRITICAL ERROR: THE NO BUTTON HAS EXCEEDED ITS AUTHORIZED LIMIT. 💀";
+
+  // Allow the error message to appear before the transformation.
+  finalConversionTimer = setTimeout(() => {
+    convertNoToYes();
+  }, 1900);
+}
+
+/* -----------------------------------------
+   ANSWER AND SCHEDULING
+----------------------------------------- */
+
+function chooseAnswer(value) {
+  // Cancel a pending transformation if the other YES is pressed.
+  if (value === "Yes") {
+    clearTimeout(finalConversionTimer);
+  }
+
+  answer = value;
+
+  const yes = value === "Yes";
+
+  $("scheduleTitle").textContent = yes
+    ? "Awesome! When are you free?"
+    : "Okay, message received. If you did want to plan something, what would work for you?";
+
+  $("scheduleSubtitle").textContent = yes
+    ? "Pick a day, time, and vibe that works for you."
+    : "No pressure. You can still choose a date for the record, or leave the page.";
+
+  // Reset the escaping button when leaving the question.
+  const noBtn = $("noBtn");
+
+  if (noBtn && noBtn.dataset.converted !== "true") {
+    noBtn.classList.remove("escaping");
     noBtn.style.left = "";
-
     noBtn.style.top = "";
+  }
 
-
-    show("p2");
-
+  showPage("schedule", 3);
+  vibrate(30);
 }
 
-
-/* =====================================================
-   CALENDAR PAGE
-===================================================== */
-
-function calendarPage(){
-
-    show("p3");
-
-    buildCalendar();
-
+function dateISO(date) {
+  return date.getFullYear() + "-" +
+    String(date.getMonth() + 1).padStart(2, "0") + "-" +
+    String(date.getDate()).padStart(2, "0");
 }
 
+function initDatePicker() {
+  const now = new Date();
 
-/* =====================================================
-   TIME PAGE
-===================================================== */
+  const today = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  );
 
-function timePage(){
+  const max = new Date(today);
+  max.setDate(max.getDate() + 30);
 
-    show("p4");
+  $("dateInput").min = dateISO(today);
+  $("dateInput").max = dateISO(max);
 
+  $("dateHint").textContent =
+    "Choose today or any date within the next 30 days.";
 }
 
+function selectTime(button) {
+  document.querySelectorAll("#timeChoices .choice").forEach(item => {
+    item.classList.remove("selected");
+  });
 
-/* =====================================================
-   CALENDAR
-===================================================== */
+  button.classList.add("selected");
 
-function buildCalendar(){
+  selectedTime = button.dataset.time;
 
-    const box =
-        document.getElementById("days");
+  vibrate(20);
+}
 
+function selectVibe(button) {
+  document.querySelectorAll("#vibeChoices .vibe").forEach(item => {
+    item.classList.remove("selected");
+  });
 
-    box.innerHTML = "";
+  button.classList.add("selected");
 
+  selectedVibe = button.dataset.vibe;
 
-    /*
-        October 1, 2026 is Thursday.
-    */
+  vibrate(20);
+}
 
-    const firstDay =
-        new Date(
-            2026,
-            9,
-            1
-        ).getDay();
+function selectMessage(button) {
+  document.querySelectorAll("#messageChoices .vibe").forEach(item => {
+    item.classList.remove("selected");
+  });
 
+  button.classList.add("selected");
 
-    for(
-        let i = 0;
-        i < firstDay;
-        i++
-    ){
+  selectedMessage = button.dataset.message;
 
-        const empty =
-            document.createElement("div");
+  if (selectedMessage === "__custom__") {
+    $("customMessage").classList.remove("hidden");
+  } else {
+    $("customMessage").classList.add("hidden");
+  }
 
-        empty.className =
-            "empty";
+  vibrate(20);
+}
 
-        box.appendChild(
-            empty
-        );
+function niceDate(value) {
+  if (!value) return "Not selected";
 
+  return new Date(value + "T12:00:00").toLocaleDateString(
+    "en-US",
+    {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    }
+  );
+}
+
+function niceTime(value) {
+  if (!value) return "Not selected";
+
+  const [hours, minutes] = value.split(":").map(Number);
+
+  return (hours % 12 || 12) + ":" +
+    String(minutes).padStart(2, "0") + " " +
+    (hours >= 12 ? "PM" : "AM");
+}
+
+/* -----------------------------------------
+   FINAL SUMMARY
+----------------------------------------- */
+
+function goToFinal() {
+  const date = $("dateInput").value;
+
+  if (!date) {
+    $("scheduleError").textContent =
+      "Choose a date first, captain. 📅";
+
+    $("scheduleError").classList.remove("hidden");
+    return;
+  }
+
+  if (
+    date < $("dateInput").min ||
+    date > $("dateInput").max
+  ) {
+    $("scheduleError").textContent =
+      "Please choose a date within the next 30 days.";
+
+    $("scheduleError").classList.remove("hidden");
+    return;
+  }
+
+  if (!selectedTime) {
+    $("scheduleError").textContent =
+      "The time machine needs a time. ⏰";
+
+    $("scheduleError").classList.remove("hidden");
+    return;
+  }
+
+  $("summary").replaceChildren();
+
+  const rows = [
+    ["Answer", answer],
+    ["NO presses", String(noAttempts)],
+    ["Date", niceDate(date)],
+    ["Time", niceTime(selectedTime)],
+    ["Vibe", selectedVibe || "Not specified"],
+    ["Note", $("noteInput").value.trim() || "None"]
+  ];
+
+  rows.forEach(([key, value]) => {
+    const row = document.createElement("div");
+    row.className = "summary-row";
+
+    const label = document.createElement("span");
+    const result = document.createElement("strong");
+
+    label.textContent = key;
+    result.textContent = value;
+
+    row.append(label, result);
+
+    $("summary").appendChild(row);
+  });
+
+  showPage("final", 4);
+}
+
+/* -----------------------------------------
+   SUBMISSION
+----------------------------------------- */
+
+async function submitResponse() {
+  if (isSubmitting) return;
+
+  if (!answer) {
+    $("submitError").textContent =
+      "Please choose YES or NO first.";
+
+    $("submitError").classList.remove("hidden");
+    return;
+  }
+
+  if (!selectedMessage) {
+    $("submitError").textContent =
+      "Choose a final message first.";
+
+    $("submitError").classList.remove("hidden");
+    return;
+  }
+
+  const custom = selectedMessage === "__custom__"
+    ? $("customMessage").value.trim()
+    : "";
+
+  if (selectedMessage === "__custom__" && !custom) {
+    $("submitError").textContent =
+      "Write your custom message, or choose one of the other messages.";
+
+    $("submitError").classList.remove("hidden");
+    return;
+  }
+
+  const date = $("dateInput").value;
+
+  const payload = {
+    response: answer,
+    noPresses: noAttempts,
+    date: date,
+    dateLabel: niceDate(date),
+    time: selectedTime,
+    timeLabel: niceTime(selectedTime),
+    vibe: selectedVibe,
+    finalMessage: selectedMessage === "__custom__"
+      ? "Custom message"
+      : selectedMessage,
+    customMessage: custom,
+    note: $("noteInput").value.trim(),
+    source: "Coffee Evening v2.2",
+    experienceStartedAt: startedAt
+  };
+
+  isSubmitting = true;
+
+  $("submitBtn").disabled = true;
+  $("submitBtn").textContent = "Sending... ☕";
+  $("submitError").classList.add("hidden");
+
+  try {
+    const response = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload),
+      mode: "cors"
+    });
+
+    if (!response.ok) {
+      throw new Error("Server returned " + response.status);
     }
 
+    const result = await response.json();
 
-    for(
-        let d = 1;
-        d <= 31;
-        d++
-    ){
-
-        const el =
-            document.createElement("div");
-
-
-        el.className =
-            "day";
-
-
-        el.textContent =
-            d;
-
-
-        el.onclick =
-            function(){
-
-                document
-                    .querySelectorAll(".day")
-                    .forEach(
-                        function(x){
-
-                            x.classList.remove(
-                                "selected"
-                            );
-
-                        }
-                    );
-
-
-                el.classList.add(
-                    "selected"
-                );
-
-
-                selectedDay =
-                    d;
-
-
-                /*
-                    Use local date instead of
-                    toISOString so the date cannot
-                    shift because of timezone.
-                */
-
-                const month =
-                    "10";
-
-
-                const day =
-                    String(d)
-                    .padStart(2,"0");
-
-
-                selectedDateISO =
-                    "2026-" +
-                    month +
-                    "-" +
-                    day;
-
-
-                const date =
-                    new Date(
-                        2026,
-                        9,
-                        d
-                    );
-
-
-                document
-                    .getElementById(
-                        "chosen"
-                    )
-                    .innerHTML =
-                    "<b>" +
-                    date.toLocaleDateString(
-                        "en-US",
-                        {
-                            weekday:"long",
-                            month:"long",
-                            day:"numeric"
-                        }
-                    ) +
-                    "</b> selected." +
-                    " Excellent." +
-                    " The coffee satellites are aligned. 🛰️";
-
-
-                document
-                    .getElementById(
-                        "dateNext"
-                    )
-                    .classList.remove(
-                        "hidden"
-                    );
-
-            };
-
-
-        box.appendChild(
-            el
-        );
-
+    if (!result.ok) {
+      throw new Error(
+        result.error || "The server could not save the response."
+      );
     }
 
+    $("successTitle").textContent =
+      answer === "Yes"
+        ? "Awesome! It's official."
+        : "Message received!";
+
+    $("successText").textContent =
+      answer === "Yes"
+        ? "Looking forward to it! ☕✨ " +
+          niceDate(date) + " at " + niceTime(selectedTime) + "."
+        : "Thanks for playing along anyway. Your answer has been recorded. ☕";
+
+    showPage("success", 5);
+
+    vibrate([35, 45, 35]);
+
+  } catch (error) {
+    $("submitError").textContent =
+      "The coffee satellites lost signal. Your choices are still here, " +
+      "so please try again. 📡 (" +
+      String(error.message || error) + ")";
+
+    $("submitError").classList.remove("hidden");
+
+    isSubmitting = false;
+    $("submitBtn").disabled = false;
+    $("submitBtn").textContent = "Try Again 🚀";
+  }
 }
 
+/* -----------------------------------------
+   KEEP THE ESCAPING BUTTON ON SCREEN
+----------------------------------------- */
 
-/* =====================================================
-   TIME FORMAT
-===================================================== */
+window.addEventListener("resize", () => {
+  const noBtn = $("noBtn");
 
-function formatTime(t){
+  if (
+    noBtn &&
+    noBtn.classList.contains("escaping") &&
+    noBtn.dataset.converted !== "true"
+  ) {
+    const rect = noBtn.getBoundingClientRect();
+    const margin = 12;
 
-    let [
-        h,
-        m
-    ] =
-        t.split(":")
-        .map(Number);
-
-
-    const ap =
-        h >= 12
-        ? "PM"
-        : "AM";
-
-
-    h =
-        h % 12 || 12;
-
-
-    return (
-        h +
-        ":" +
-        String(m).padStart(2,"0") +
-        " " +
-        ap
+    const x = Math.max(
+      margin,
+      Math.min(
+        rect.left,
+        window.innerWidth - rect.width - margin
+      )
     );
 
-}
-
-
-/* =====================================================
-   REVIEW
-===================================================== */
-
-function review(){
-
-    const t =
-        document
-        .getElementById("time")
-        .value;
-
-
-    if(!selectedDateISO){
-
-        alert(
-            "Pick a date first, captain. 📅"
-        );
-
-        return;
-
-    }
-
-
-    if(!t){
-
-        alert(
-            "The time machine needs a time. ⏰"
-        );
-
-        return;
-
-    }
-
-
-    selectedTime =
-        t;
-
-
-    const date =
-        new Date(
-            selectedDateISO +
-            "T12:00:00"
-        );
-
-
-    document
-        .getElementById(
-            "reviewText"
-        )
-        .innerHTML =
-
-        "☕ <b>" +
-
-        date.toLocaleDateString(
-            "en-US",
-            {
-                weekday:"long",
-                month:"long",
-                day:"numeric"
-            }
-        ) +
-
-        "</b><br>" +
-
-        "⏰ <b>" +
-
-        formatTime(t) +
-
-        "</b><br><br>" +
-
-        "Everything looks suspiciously official.";
-
-
-    show("p5");
-
-}
-
-
-/* =====================================================
-   SUBMIT
-===================================================== */
-
-async function submitResponse(){
-
-    if(
-        ENDPOINT.includes(
-            "PASTE_YOUR"
-        )
-    ){
-
-        alert(
-            "The app is in demo mode. Add your Google Apps Script Web App URL first."
-        );
-
-        return;
-
-    }
-
-
-    const date =
-        new Date(
-            selectedDateISO +
-            "T12:00:00"
-        );
-
-
-    const payload = {
-
-        response:"Yes",
-
-        date:
-            selectedDateISO,
-
-        dateLabel:
-            date.toLocaleDateString(
-                "en-US",
-                {
-                    weekday:"long",
-                    month:"long",
-                    day:"numeric"
-                }
-            ),
-
-        time:
-            selectedTime,
-
-        timeLabel:
-            formatTime(
-                selectedTime
-            ),
-
-        source:
-            "Coffee Evening"
-
-    };
-
-
-    try{
-
-        const response =
-            await fetch(
-                ENDPOINT,
-                {
-
-                    method:"POST",
-
-                    headers:{
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
-                    },
-
-                    body:
-                        JSON.stringify(
-                            payload
-                        ),
-
-                    mode:"cors"
-
-                }
-            );
-
-
-        if(!response.ok){
-
-            throw new Error(
-                "Submission failed"
-            );
-
-        }
-
-
-        document
-            .getElementById(
-                "finalText"
-            )
-            .innerHTML =
-
-            "See you on <b>" +
-
-            payload.dateLabel +
-
-            "</b> at <b>" +
-
-            payload.timeLabel +
-
-            "</b>. 😎" +
-
-            "<br><br>" +
-
-            "Booking status: " +
-
-            "<b>" +
-
-            "LEGALLY UNOFFICIAL, " +
-            "EMOTIONALLY CONFIRMED."
-
-            +
-
-            "</b> 😂";
-
-
-        show("p6");
-
-    }
-
-
-    catch(error){
-
-        alert(
-            "The coffee satellites lost signal. Please try again. 📡"
-        );
-
-    }
-
-}
-
+    const y = Math.max(
+      margin,
+      Math.min(
+        rect.top,
+        window.innerHeight - rect.height - margin
+      )
+    );
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+});
+
+initDatePicker();
 </script>
 
 </body>
-</html>
+    </html>
