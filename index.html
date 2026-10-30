@@ -5,787 +5,147 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#6f4e37">
 <title>Coffee Evening ☕</title>
-
 <style>
-:root {
-  --coffee: #6f4e37;
-  --espresso: #2b1d17;
-  --cream: #fff8f0;
-  --latte: #ead7c0;
-  --coral: #e76f51;
-  --green: #3c8060;
-  --ink: #34241d;
-  --muted: #78665b;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  color: var(--ink);
-  background:
-    radial-gradient(circle at 15% 5%, #f5dfc8 0, transparent 32%),
-    linear-gradient(145deg, #fff8f0, #ead7c0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  overflow-x: hidden;
-}
-
-body:before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .22;
-  background-image: radial-gradient(#6f4e37 .6px, transparent .6px);
-  background-size: 16px 16px;
-}
-
-.card {
-  position: relative;
-  width: min(100%, 560px);
-  max-height: calc(100dvh - 36px);
-  overflow: auto;
-  background: rgba(255, 252, 247, .96);
-  border: 1px solid rgba(111, 78, 55, .16);
-  border-radius: 28px;
-  padding: clamp(22px, 5vw, 34px);
-  text-align: center;
-  box-shadow: 0 24px 70px #51311d25;
-  animation: rise .45s ease;
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(.985);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.hidden {
-  display: none !important;
-}
-
-.cup {
-  font-size: 54px;
-  line-height: 1.2;
-  display: inline-block;
-  animation: bob 3s ease-in-out infinite;
-}
-
-@keyframes bob {
-  50% {
-    transform: translateY(-5px) rotate(-3deg);
-  }
-}
-
-h1 {
-  font-size: clamp(25px, 6vw, 32px);
-  line-height: 1.15;
-  margin: 14px 0 12px;
-  letter-spacing: -.7px;
-}
-
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 11px;
-  font-weight: 850;
-  color: var(--coffee);
-}
-
-.sub {
-  color: var(--muted);
-  line-height: 1.6;
-  margin: 10px 0;
-}
-
-.buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 25px 0 18px;
-}
-
-button,
-.button {
-  font: inherit;
-  font-weight: 750;
-  border: 0;
-  border-radius: 14px;
-  padding: 14px 19px;
-  min-height: 48px;
-  cursor: pointer;
-  transition:
-    transform .16s,
-    filter .16s,
-    box-shadow .16s;
-}
-
-button:active {
-  transform: scale(.97);
-}
-
-button:hover {
-  filter: brightness(1.03);
-}
-
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid #e76f51;
-  outline-offset: 3px;
-}
-
-.yes {
-  background: var(--green);
-  color: white;
-  box-shadow: 0 7px 0 #275b42;
-}
-
-.no {
-  background: #f5d8d0;
-  color: #963c2b;
-  border: 1px solid #eab6a8;
-}
-
-/* The NO button can escape its original container. */
-.no.escaping {
-  position: fixed;
-  z-index: 1001;
-  margin: 0;
-  min-width: 105px;
-  box-shadow: 0 8px 24px #51311d35;
-  transition:
-    left .22s cubic-bezier(.2, .8, .2, 1),
-    top .22s cubic-bezier(.2, .8, .2, 1),
-    transform .16s,
-    filter .16s;
-  touch-action: manipulation;
-}
-
-.primary {
-  background: var(--coffee);
-  color: white;
-  box-shadow: 0 7px 0 #4d3526;
-}
-
-.secondary {
-  background: #f1e4d6;
-  color: var(--ink);
-}
-
-.wide {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.notice {
-  font-size: 12px;
-  color: #907e71;
-  line-height: 1.5;
-  margin-top: 20px;
-}
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: #f4e7da;
-  border-radius: 999px;
-  padding: 8px 12px;
-  font-size: 12px;
-  font-weight: 750;
-  color: var(--coffee);
-}
-
-.field {
-  text-align: left;
-  margin: 18px 0;
-}
-
-.field label {
-  display: block;
-  font-size: 14px;
-  font-weight: 800;
-  margin: 0 0 8px;
-}
-
-.field input[type=date],
-.field textarea {
-  width: 100%;
-  border: 1px solid #dcc8b5;
-  border-radius: 13px;
-  background: white;
-  padding: 14px;
-  font: inherit;
-  color: var(--ink);
-}
-
-textarea {
-  min-height: 90px;
-  resize: vertical;
-}
-
-.choice-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
-}
-
-.choice {
-  padding: 12px 8px;
-  background: #f4e8dc;
-  color: var(--ink);
-  border: 1px solid #e5d2c0;
-  font-size: 14px;
-}
-
-.choice.selected {
-  background: #d9eadc;
-  border: 2px solid var(--green);
-  padding: 11px 7px;
-  box-shadow: 0 0 0 2px #d9eadc;
-}
-
-.vibes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 9px;
-}
-
-.vibe {
-  background: #f4e8dc;
-  color: var(--ink);
-  border: 1px solid #e5d2c0;
-  text-align: left;
-  padding: 13px;
-  font-size: 13px;
-}
-
-.vibe.selected {
-  background: #d9eadc;
-  border: 2px solid var(--green);
-  padding: 12px;
-}
-
-.summary {
-  background: #fbf0e4;
-  border: 1px solid #ead6c3;
-  border-radius: 17px;
-  text-align: left;
-  padding: 16px;
-  margin: 18px 0;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 0;
-  border-bottom: 1px solid #ead9c8;
-  font-size: 14px;
-}
-
-.summary-row:last-child {
-  border-bottom: 0;
-}
-
-.summary-row span:first-child {
-  color: var(--muted);
-}
-
-.summary-row strong {
-  text-align: right;
-  overflow-wrap: anywhere;
-}
-
-.text-link {
-  border: 0;
-  background: transparent;
-  color: var(--coffee);
-  text-decoration: underline;
-  padding: 8px;
-  min-height: auto;
-}
-
-.progress {
-  height: 5px;
-  border-radius: 9px;
-  background: #ead8c6;
-  overflow: hidden;
-  margin-bottom: 22px;
-}
-
-.progress span {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: var(--coral);
-  transition: width .3s;
-}
-
-/* NEW: small floating glass toast instead of a blocking modal. */
-.toast-popup {
-  position: fixed;
-  z-index: 1000;
-  width: min(320px, calc(100vw - 32px));
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 15px 17px;
-  border: 1px solid rgba(255, 255, 255, .55);
-  border-radius: 18px;
-  color: var(--ink);
-  background: rgba(255, 248, 240, .76);
-  box-shadow: 0 12px 38px rgba(43, 29, 23, .18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  opacity: 0;
-  transform: translateY(8px) scale(.96);
-  pointer-events: none;
-  transition:
-    opacity .28s ease,
-    transform .28s ease;
-  overflow-wrap: anywhere;
-}
-
-.toast-popup.show {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.toast-icon {
-  flex: 0 0 auto;
-  font-size: 27px;
-  line-height: 1.25;
-}
-
-.toast-content {
-  min-width: 0;
-  text-align: left;
-}
-
-.toast-content strong {
-  display: block;
-  font-size: 13px;
-  line-height: 1.4;
-  letter-spacing: .25px;
-}
-
-.toast-content p {
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--muted);
-  margin: 5px 0 0;
-}
-
-.error-banner {
-  padding: 12px;
-  border-radius: 12px;
-  background: #fbe4df;
-  color: #8c2f20;
-  font-size: 14px;
-  text-align: left;
-  margin: 12px 0;
-}
-
-.success-icon {
-  font-size: 62px;
-  animation: bob 2.4s ease-in-out infinite;
-}
-
-.steam {
-  display: inline-block;
-  animation: steam 1.6s ease-in-out infinite;
-}
-
-@keyframes steam {
-  50% {
-    transform: translateY(-7px);
-    opacity: .55;
-  }
-}
-
-footer {
-  font-size: 11px;
-  color: #9a8677;
-  margin-top: 24px;
-}
-
-/* ============================================================
-   DOMAIN EXPANSION (15th NO press)
-   ============================================================ */
-.domain-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  display: grid;
-  place-items: center;
-  background: rgba(5, 9, 18, .95);
-  overflow: hidden;
-  opacity: 1;
-  transition: opacity .7s, background 1s;
-  font-family: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
-  color: #EDF8FF;
-}
-
-.domain-overlay.out {
-  opacity: 0;
-}
-
-.domain-overlay.p2 {
-  background: radial-gradient(circle at 50% 50%, #0f4a7a 0, #050912 70%);
-}
-
-#domainFx {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.d-alert {
-  position: relative;
-  font: 700 clamp(.9rem, 3.2vw, 1.3rem)/1.8 ui-monospace, Consolas, monospace;
-  color: #B8EAFF;
-  letter-spacing: .08em;
-  padding: 20px;
-  text-align: left;
-  white-space: pre-wrap;
-  transition: opacity .5s;
-}
-
-.domain-overlay.p2 .d-alert {
-  opacity: 0;
-}
-
-.d-flash {
-  position: absolute;
-  inset: 0;
-  background: #35BAFF;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.domain-overlay.p2 .d-flash {
-  animation: dFlash .5s ease-out;
-}
-
-@keyframes dFlash {
-  0% { opacity: .5; }
-  100% { opacity: 0; }
-}
-
-.d-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 22vmin;
-  height: 22vmin;
-  margin: -11vmin 0 0 -11vmin;
-  border: 2px solid #35BAFF;
-  border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 0 30px #35BAFF, inset 0 0 30px rgba(53, 186, 255, .4);
-}
-
-.domain-overlay.p2 .d-ring {
-  animation: dRing 2s ease-out forwards;
-}
-
-.domain-overlay.p2 .d-ring.r2 {
-  animation-delay: .35s;
-}
-
-@keyframes dRing {
-  0% { transform: scale(.2); opacity: .9; }
-  100% { transform: scale(8); opacity: 0; }
-}
-
-.d-title {
-  position: relative;
-  text-align: center;
-  opacity: 0;
-  padding: 0 14px;
-}
-
-.domain-overlay.p3 .d-title {
-  animation: dRise 1s forwards;
-}
-
-@keyframes dRise {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
-}
-
-.d-title h2 {
-  margin: 0;
-  font-size: clamp(2rem, 10vw, 5.5rem);
-  line-height: 1.05;
-  font-weight: 800;
-  font-style: italic;
-  text-transform: uppercase;
-  text-shadow: 0 0 24px #35BAFF, 0 0 60px rgba(53, 186, 255, .6);
-  animation: dSpace 3.2s ease-out both;
-  animation-play-state: paused;
-}
-
-.domain-overlay.p3 .d-title h2 {
-  animation-play-state: running;
-}
-
-@keyframes dSpace {
-  from { letter-spacing: .7em; }
-  to { letter-spacing: .08em; }
-}
-
-.d-title p {
-  margin: 14px 0 0;
-  font-size: clamp(1.2rem, 5vw, 2.2rem);
-  color: #B8EAFF;
-  letter-spacing: .12em;
-}
-
-.d-title small {
-  display: block;
-  margin-top: 16px;
-  letter-spacing: .3em;
-  color: #35BAFF;
-  font-size: clamp(.7rem, 2.6vw, .95rem);
-}
-
-/* Terminal shown after the sequence */
-.domain-term {
-  text-align: left;
-  background: #0b1626;
-  color: #B8EAFF;
-  border: 1px solid #35BAFF;
-  border-radius: 12px;
-  padding: 12px;
-  margin-top: 16px;
-  max-height: 170px;
-  overflow: auto;
-  font: 12px/1.6 ui-monospace, Consolas, monospace;
-  overflow-wrap: anywhere;
-}
-
-/* The NO button after it has been caught */
-.yes.caught {
-  background: #0b1626;
-  color: #B8EAFF;
-  border: 1px solid #35BAFF;
-  box-shadow: 0 7px 0 #14344f, 0 0 18px rgba(53, 186, 255, .35);
-}
-
-@media(max-width: 380px) {
-  .choice-grid {
-    gap: 6px;
-  }
-
-  .choice {
-    font-size: 12px;
-    padding: 10px 3px;
-  }
-
-  .vibe {
-    font-size: 12px;
-    padding: 10px;
-  }
-
-  .card {
-    border-radius: 22px;
-  }
-
-  .toast-popup {
-    width: min(290px, calc(100vw - 24px));
-  }
-}
-
-@media(prefers-reduced-motion: reduce) {
-  *,
-  *:before,
-  *:after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-
-  .d-ring,
-  .d-flash,
-  #domainFx {
-    display: none;
-  }
-}
+:root{--coffee:#6f4e37;--espresso:#2b1d17;--cream:#fff8f0;--latte:#ead7c0;--coral:#e76f51;--green:#3c8060;--ink:#34241d;--muted:#78665b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;min-height:100dvh;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 5%,#f5dfc8 0,transparent 32%),linear-gradient(145deg,#fff8f0,#ead7c0);display:flex;align-items:center;justify-content:center;padding:18px;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#6f4e37 .6px,transparent .6px);background-size:16px 16px}
+.card{position:relative;width:min(100%,560px);max-height:calc(100dvh - 36px);overflow:auto;background:rgba(255,252,247,.96);border:1px solid rgba(111,78,55,.16);border-radius:28px;padding:clamp(22px,5vw,34px);text-align:center;box-shadow:0 24px 70px #51311d25;animation:rise .45s ease}
+@keyframes rise{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+.hidden{display:none!important}
+.cup{font-size:54px;line-height:1.2;display:inline-block;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px) rotate(-3deg)}}
+h1{font-size:clamp(25px,6vw,32px);line-height:1.15;margin:14px 0 12px;letter-spacing:-.7px}
+.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:850;color:var(--coffee)}
+.sub{color:var(--muted);line-height:1.6;margin:10px 0}
+.buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:25px 0 18px}
+button,.button{font:inherit;font-weight:750;border:0;border-radius:14px;padding:14px 19px;min-height:48px;cursor:pointer;transition:transform .16s,filter .16s,box-shadow .16s}
+button:active{transform:scale(.97)}button:hover{filter:brightness(1.03)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #e76f51;outline-offset:3px}
+.yes{background:var(--green);color:white;box-shadow:0 7px 0 #275b42}
+.no{background:#f5d8d0;color:#963c2b;border:1px solid #eab6a8}
+.no.escaping{position:fixed;z-index:1001;margin:0;min-width:105px;box-shadow:0 8px 24px #51311d35;transition:left .22s cubic-bezier(.2,.8,.2,1),top .22s cubic-bezier(.2,.8,.2,1),transform .16s,filter .16s;touch-action:manipulation}
+.primary{background:var(--coffee);color:white;box-shadow:0 7px 0 #4d3526}
+.secondary{background:#f1e4d6;color:var(--ink)}
+.wide{width:100%;margin-top:10px}
+.notice{font-size:12px;color:#907e71;line-height:1.5;margin-top:20px}
+.pill{display:inline-flex;align-items:center;gap:7px;background:#f4e7da;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:750;color:var(--coffee)}
+.field{text-align:left;margin:18px 0}
+.field label{display:block;font-size:14px;font-weight:800;margin:0 0 8px}
+.field input[type=date],.field textarea{width:100%;border:1px solid #dcc8b5;border-radius:13px;background:white;padding:14px;font:inherit;color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.choice{padding:12px 8px;background:#f4e8dc;color:var(--ink);border:1px solid #e5d2c0;font-size:14px}
+.choice.selected{background:#d9eadc;border:2px solid var(--green);padding:11px 7px;box-shadow:0 0 0 2px #d9eadc}
+.vibes{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.vibe{background:#f4e8dc;color:var(--ink);border:1px solid #e5d2c0;text-align:left;padding:13px;font-size:13px}
+.vibe.selected{background:#d9eadc;border:2px solid var(--green);padding:12px}
+.summary{background:#fbf0e4;border:1px solid #ead6c3;border-radius:17px;text-align:left;padding:16px;margin:18px 0}
+.summary-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #ead9c8;font-size:14px}
+.summary-row:last-child{border-bottom:0}.summary-row span:first-child{color:var(--muted)}.summary-row strong{text-align:right;overflow-wrap:anywhere}
+.text-link{border:0;background:transparent;color:var(--coffee);text-decoration:underline;padding:8px;min-height:auto}
+.progress{height:5px;border-radius:9px;background:#ead8c6;overflow:hidden;margin-bottom:22px}
+.progress span{display:block;height:100%;width:0;background:var(--coral);transition:width .3s}
+.toast-popup{position:fixed;z-index:1000;width:min(320px,calc(100vw - 32px));display:flex;align-items:flex-start;gap:12px;padding:15px 17px;border:1px solid rgba(255,255,255,.55);border-radius:18px;color:var(--ink);background:rgba(255,248,240,.76);box-shadow:0 12px 38px rgba(43,29,23,.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);opacity:0;transform:translateY(8px) scale(.96);pointer-events:none;transition:opacity .28s ease,transform .28s ease;overflow-wrap:anywhere}
+.toast-popup.show{opacity:1;transform:translateY(0) scale(1)}
+.toast-popup.warning{border:2px solid #e76f51;background:rgba(255,238,232,.96);box-shadow:0 0 15px rgba(231,111,81,.5),0 12px 38px rgba(43,29,23,.25);animation:warningPulse .65s ease-in-out infinite alternate}
+.toast-popup.warning .toast-icon{animation:warningIcon .65s ease-in-out infinite alternate}
+.toast-popup.warning .toast-content strong{color:#a52f1d}
+@keyframes warningPulse{from{box-shadow:0 0 8px rgba(231,111,81,.3),0 12px 38px rgba(43,29,23,.18)}to{box-shadow:0 0 25px rgba(231,111,81,.85),0 12px 38px rgba(43,29,23,.25)}}
+@keyframes warningIcon{from{transform:scale(1)}to{transform:scale(1.2) rotate(-8deg)}}
+.toast-icon{flex:0 0 auto;font-size:27px;line-height:1.25}
+.toast-content{min-width:0;text-align:left}.toast-content strong{display:block;font-size:13px;line-height:1.4;letter-spacing:.25px}
+.toast-content p{font-size:12px;line-height:1.5;color:var(--muted);margin:5px 0 0}
+.error-banner{padding:12px;border-radius:12px;background:#fbe4df;color:#8c2f20;font-size:14px;text-align:left;margin:12px 0}
+.success-icon{font-size:62px;animation:bob 2.4s ease-in-out infinite}
+.steam{display:inline-block;animation:steam 1.6s ease-in-out infinite}
+@keyframes steam{50%{transform:translateY(-7px);opacity:.55}}
+footer{font-size:11px;color:#9a8677;margin-top:24px}
+.domain-overlay{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;background:rgba(5,9,18,.95);overflow:hidden;opacity:1;transition:opacity .7s,background 1s;font-family:Bahnschrift,"DIN Alternate","Roboto Condensed","Arial Narrow",system-ui,sans-serif;color:#EDF8FF}
+.domain-overlay.out{opacity:0}
+.domain-overlay.p2{background:radial-gradient(circle at 50% 50%,#0f4a7a 0,#050912 70%)}
+#domainFx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.d-alert{position:relative;font:700 clamp(.9rem,3.2vw,1.3rem)/1.8 ui-monospace,Consolas,monospace;color:#B8EAFF;letter-spacing:.08em;padding:20px;text-align:left;white-space:pre-wrap;transition:opacity .5s}
+.domain-overlay.p2 .d-alert{opacity:0}
+.d-flash{position:absolute;inset:0;background:#35BAFF;opacity:0;pointer-events:none}
+.domain-overlay.p2 .d-flash{animation:dFlash .5s ease-out}
+@keyframes dFlash{0%{opacity:.5}100%{opacity:0}}
+.d-ring{position:absolute;left:50%;top:50%;width:22vmin;height:22vmin;margin:-11vmin 0 0 -11vmin;border:2px solid #35BAFF;border-radius:50%;opacity:0;box-shadow:0 0 30px #35BAFF,inset 0 0 30px rgba(53,186,255,.4)}
+.domain-overlay.p2 .d-ring{animation:dRing 2s ease-out forwards}
+.domain-overlay.p2 .d-ring.r2{animation-delay:.35s}
+@keyframes dRing{0%{transform:scale(.2);opacity:.9}100%{transform:scale(8);opacity:0}}
+.d-title{position:relative;text-align:center;opacity:0;padding:0 14px}
+.domain-overlay.p3 .d-title{animation:dRise 1s forwards}
+@keyframes dRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.d-title h2{margin:0;font-size:clamp(2rem,10vw,5.5rem);line-height:1.05;font-weight:800;font-style:italic;text-transform:uppercase;text-shadow:0 0 24px #35BAFF,0 0 60px rgba(53,186,255,.6);animation:dSpace 3.2s ease-out both;animation-play-state:paused}
+.domain-overlay.p3 .d-title h2{animation-play-state:running}
+@keyframes dSpace{from{letter-spacing:.7em}to{letter-spacing:.08em}}
+.d-title p{margin:14px 0 0;font-size:clamp(1.2rem,5vw,2.2rem);color:#B8EAFF;letter-spacing:.12em}
+.d-title small{display:block;margin-top:16px;letter-spacing:.3em;color:#35BAFF;font-size:clamp(.7rem,2.6vw,.95rem)}
+.domain-term{text-align:left;background:#0b1626;color:#B8EAFF;border:1px solid #35BAFF;border-radius:12px;padding:12px;margin-top:16px;max-height:170px;overflow:auto;font:12px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.yes.caught{background:#0b1626;color:#B8EAFF;border:1px solid #35BAFF;box-shadow:0 7px 0 #14344f,0 0 18px rgba(53,186,255,.35)}
+@media(max-width:380px){.choice-grid{gap:6px}.choice{font-size:12px;padding:10px 3px}.vibe{font-size:12px;padding:10px}.card{border-radius:22px}.toast-popup{width:min(290px,calc(100vw - 24px))}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.d-ring,.d-flash,#domainFx{display:none}}
 </style>
 </head>
-
 <body>
-
 <main class="card">
-
-  <div class="progress" aria-hidden="true">
-    <span id="progress"></span>
-  </div>
-
+  <div class="progress" aria-hidden="true"><span id="progress"></span></div>
   <section id="landing">
-    <div class="cup" aria-hidden="true">☕</div>
-    <div class="eyebrow">A small invitation</div>
-    <h1>Coffee Evening</h1>
-    <p class="sub">One tiny question. Potentially excellent snacks.</p>
+    <div class="cup" aria-hidden="true">☕</div><div class="eyebrow">A small invitation</div>
+    <h1>Coffee Evening</h1><p class="sub">One tiny question. Potentially excellent snacks.</p>
     <p class="sub">A very serious, highly unofficial coffee proposal is waiting inside. 😂</p>
     <button class="primary wide" onclick="startExperience()">Let's Begin →</button>
   </section>
-
   <section id="question" class="hidden">
-    <div class="cup" aria-hidden="true">☕👀</div>
-    <div class="eyebrow">Extremely serious question</div>
-    <h1>So... are you coming?</h1>
-    <p class="sub">Would you join me for a coffee evening?</p>
+    <div class="cup" aria-hidden="true">☕👀</div><div class="eyebrow">Extremely serious question</div>
+    <h1>So... are you coming?</h1><p class="sub">Would you join me for a coffee evening?</p>
     <p class="sub">Please answer responsibly. My imaginary legal team is watching. 😂</p>
-
     <div class="buttons" id="questionButtons">
       <button class="yes" onclick="chooseAnswer('Yes')">YES 😌</button>
       <button class="no" id="noBtn" onclick="pressNo()">NO 😭</button>
     </div>
-
-    <p class="notice" id="noNotice">
-      The NO button has free will. Its excuses, however, are questionable. 💀
-    </p>
-
+    <p class="notice" id="noNotice">The NO button has free will. Its excuses, however, are questionable. 💀</p>
     <div id="domainTerm" class="domain-term hidden" role="log" aria-live="polite" aria-label="System terminal"></div>
   </section>
-
   <section id="schedule" class="hidden">
-    <div class="cup" aria-hidden="true">📅</div>
-    <div class="eyebrow">Scheduling department</div>
-    <h1 id="scheduleTitle">Awesome! When are you free?</h1>
-    <p class="sub" id="scheduleSubtitle">Choose a day and a time that works for you.</p>
-
-    <div class="field">
-      <label for="dateInput">📅 Choose a date</label>
-      <input type="date" id="dateInput">
-      <p class="notice" id="dateHint"></p>
-    </div>
-
-    <div class="field">
-      <label>⏰ Choose a time</label>
-      <div class="choice-grid" id="timeChoices">
-        <button class="choice" data-time="14:00" onclick="selectTime(this)">2:00 PM</button>
-        <button class="choice" data-time="15:00" onclick="selectTime(this)">3:00 PM</button>
-        <button class="choice" data-time="16:00" onclick="selectTime(this)">4:00 PM</button>
-        <button class="choice" data-time="17:00" onclick="selectTime(this)">5:00 PM</button>
-        <button class="choice" data-time="18:00" onclick="selectTime(this)">6:00 PM</button>
-        <button class="choice" data-time="19:00" onclick="selectTime(this)">7:00 PM</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>✨ Pick the vibe (optional)</label>
-      <div class="vibes" id="vibeChoices">
-        <button class="vibe" data-vibe="Quiet Coffee & Catch-up" onclick="selectVibe(this)">☕ Quiet Coffee & Catch-up</button>
-        <button class="vibe" data-vibe="Boba / Iced Tea" onclick="selectVibe(this)">🧋 Boba / Iced Tea</button>
-        <button class="vibe" data-vibe="Coffee + Pastries / Dessert" onclick="selectVibe(this)">🍩 Coffee + Pastries</button>
-        <button class="vibe" data-vibe="Coffee To-Go & Walk" onclick="selectVibe(this)">🚶 Coffee To-Go & Walk</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="noteInput">💬 Anything else? (optional)</label>
-      <textarea id="noteInput" maxlength="500" placeholder="A preference, a request, or a very important pastry opinion..."></textarea>
-    </div>
-
+    <div class="cup" aria-hidden="true">📅</div><div class="eyebrow">Scheduling department</div>
+    <h1 id="scheduleTitle">Awesome! When are you free?</h1><p class="sub" id="scheduleSubtitle">Choose a day and a time that works for you.</p>
+    <div class="field"><label for="dateInput">📅 Choose a date</label><input type="date" id="dateInput"><p class="notice" id="dateHint"></p></div>
+    <div class="field"><label>⏰ Choose a time</label><div class="choice-grid" id="timeChoices">
+      <button class="choice" data-time="14:00" onclick="selectTime(this)">2:00 PM</button><button class="choice" data-time="15:00" onclick="selectTime(this)">3:00 PM</button><button class="choice" data-time="16:00" onclick="selectTime(this)">4:00 PM</button><button class="choice" data-time="17:00" onclick="selectTime(this)">5:00 PM</button><button class="choice" data-time="18:00" onclick="selectTime(this)">6:00 PM</button><button class="choice" data-time="19:00" onclick="selectTime(this)">7:00 PM</button>
+    </div></div>
+    <div class="field"><label>✨ Pick the vibe (optional)</label><div class="vibes" id="vibeChoices">
+      <button class="vibe" data-vibe="Quiet Coffee & Catch-up" onclick="selectVibe(this)">☕ Quiet Coffee & Catch-up</button><button class="vibe" data-vibe="Boba / Iced Tea" onclick="selectVibe(this)">🧋 Boba / Iced Tea</button><button class="vibe" data-vibe="Coffee + Pastries / Dessert" onclick="selectVibe(this)">🍩 Coffee + Pastries</button><button class="vibe" data-vibe="Coffee To-Go & Walk" onclick="selectVibe(this)">🚶 Coffee To-Go & Walk</button>
+    </div></div>
+    <div class="field"><label for="noteInput">💬 Anything else? (optional)</label><textarea id="noteInput" maxlength="500" placeholder="A preference, a request, or a very important pastry opinion..."></textarea></div>
     <div id="scheduleError" class="error-banner hidden" role="alert"></div>
-
-    <button class="primary wide" onclick="goToFinal()">Continue to final message →</button>
-    <button class="text-link" onclick="showPage('question', 2)">← Back to the question</button>
+    <button class="primary wide" onclick="goToFinal()">Continue to final message →</button><button class="text-link" onclick="showPage('question',2)">← Back to the question</button>
   </section>
-
   <section id="final" class="hidden">
-    <div class="cup" aria-hidden="true">🧾</div>
-    <div class="eyebrow">Final paperwork</div>
-    <h1>One last thing...</h1>
-    <p class="sub">Choose a message for the official record.</p>
-
+    <div class="cup" aria-hidden="true">🧾</div><div class="eyebrow">Final paperwork</div><h1>One last thing...</h1><p class="sub">Choose a message for the official record.</p>
     <div class="summary" id="summary"></div>
-
-    <div class="field">
-      <label>💬 Your final message</label>
-
-      <div class="vibes" id="messageChoices">
-        <button class="vibe" data-message="You are annoying." onclick="selectMessage(this)">😂 You are annoying.</button>
-        <button class="vibe" data-message="You're ridiculous." onclick="selectMessage(this)">🤦 You're ridiculous.</button>
-        <button class="vibe" data-message="Okay, okay... I give up." onclick="selectMessage(this)">☕ Okay, I give up.</button>
-        <button class="vibe" data-message="Why did I even click this?" onclick="selectMessage(this)">😭 Why did I click this?</button>
-        <button class="vibe" data-message="You really thought I'd say yes?" onclick="selectMessage(this)">👀 You thought I'd say yes?</button>
-        <button class="vibe" data-message="Fine. You win." onclick="selectMessage(this)">❤️ Fine. You win.</button>
-        <button class="vibe" data-message="__custom__" onclick="selectMessage(this)">✍️ I'll write my own...</button>
-      </div>
-
-      <textarea id="customMessage" class="hidden" maxlength="500" placeholder="Write your own message..."></textarea>
-    </div>
-
+    <div class="field"><label>💬 Your final message</label><div class="vibes" id="messageChoices">
+      <button class="vibe" data-message="You are annoying." onclick="selectMessage(this)">😂 You are annoying.</button><button class="vibe" data-message="You're ridiculous." onclick="selectMessage(this)">🤦 You're ridiculous.</button><button class="vibe" data-message="Okay, okay... I give up." onclick="selectMessage(this)">☕ Okay, I give up.</button><button class="vibe" data-message="Why did I even click this?" onclick="selectMessage(this)">😭 Why did I click this?</button><button class="vibe" data-message="You really thought I'd say yes?" onclick="selectMessage(this)">👀 You thought I'd say yes?</button><button class="vibe" data-message="Fine. You win." onclick="selectMessage(this)">❤️ Fine. You win.</button><button class="vibe" data-message="__custom__" onclick="selectMessage(this)">✍️ I'll write my own...</button>
+    </div><textarea id="customMessage" class="hidden" maxlength="500" placeholder="Write your own message..."></textarea></div>
     <div id="submitError" class="error-banner hidden" role="alert"></div>
-
-    <button id="submitBtn" class="primary wide" onclick="submitResponse()">Submit Response 🚀</button>
-    <button class="text-link" onclick="showPage('schedule', 3)">← Edit date, time, vibe or note</button>
-
+    <button id="submitBtn" class="primary wide" onclick="submitResponse()">Submit Response 🚀</button><button class="text-link" onclick="showPage('schedule',3)">← Edit date, time, vibe or note</button>
     <p class="notice">Nothing is sent until Submit is pressed.</p>
   </section>
-
   <section id="success" class="hidden">
-    <div class="success-icon" aria-hidden="true"><span class="steam">♨️</span>☕</div>
-    <div class="eyebrow">Transmission complete</div>
-    <h1 id="successTitle">Message received!</h1>
-    <p class="sub" id="successText"></p>
-    <p class="notice">The coffee department has received its official paperwork. 😂</p>
+    <div class="success-icon" aria-hidden="true"><span class="steam">♨️</span>☕</div><div class="eyebrow">Transmission complete</div><h1 id="successTitle">Message received!</h1><p class="sub" id="successText"></p><p class="notice">The coffee department has received its official paperwork. 😂</p>
   </section>
-
   <footer>Crafted with caffeine & questionable amounts of HTML ☕</footer>
-
 </main>
 
-<!-- Small floating toast. No backdrop and no buttons to dismiss. -->
-<div
-  id="toastPopup"
-  class="toast-popup hidden"
-  role="status"
-  aria-live="polite"
-  aria-atomic="true"
->
-  <span class="toast-icon" id="toastIcon">👀</span>
-  <div class="toast-content">
-    <strong id="toastTitle"></strong>
-    <p id="toastText"></p>
-  </div>
+<div id="toastPopup" class="toast-popup hidden" role="status" aria-live="polite" aria-atomic="true">
+  <span class="toast-icon" id="toastIcon">👀</span><div class="toast-content"><strong id="toastTitle"></strong><p id="toastText"></p></div>
 </div>
 
-<!-- Domain Expansion overlay (shown only during the 15th-press sequence) -->
+<!-- Domain Expansion overlay: triggered on the fifth NO press -->
 <div id="domainOverlay" class="domain-overlay hidden" aria-live="assertive">
-  <canvas id="domainFx" aria-hidden="true"></canvas>
-  <div class="d-flash"></div>
-  <div class="d-ring"></div>
-  <div class="d-ring r2"></div>
-  <div id="domainAlert" class="d-alert"></div>
-  <div class="d-title">
-    <h2>Domain Expansion</h2>
-    <p>YOU ARE COMING. ♾️</p>
-    <small>INFINITY PROTOCOL ACTIVATED.</small>
-  </div>
+  <canvas id="domainFx" aria-hidden="true"></canvas><div class="d-flash"></div><div class="d-ring"></div><div class="d-ring r2"></div><div id="domainAlert" class="d-alert"></div>
+  <div class="d-title"><h2>Domain Expansion</h2><p>YOU ARE COMING. ♾️</p><small>INFINITY PROTOCOL ACTIVATED.</small></div>
 </div>
 
 <script>
@@ -794,80 +154,24 @@ footer {
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbwSuCFhu5GQRU4Yqfu9XtznV7gZ_3LuI-gqdejXY0g8YgOXhCoPsEYHswy3CEGuj_PFtw/exec";
 
 const noPopups = [
-  [
-    "👀",
-    "OBJECTION!",
-    "Are you sure? We haven't even had the coffee yet!"
-  ],
-  [
-    "☕",
-    "A VERY IMPORTANT ANNOUNCEMENT",
-    "Coffee, good vibes, and absolutely no awkward interviews. Consider the offer."
-  ],
-  [
-    "😭",
-    "THE EFFORT!",
-    "I even made a whole website for this. THE WEBSITE HAS CSS!"
-  ],
-  [
-    "🤨",
-    "PREMIUM OFFER",
-    "You're rejecting a premium coffee experience? In THIS economy?"
-  ],
-  [
-    "📣",
-    "FORMAL OPENING STATEMENT",
-    "Please allow the prosecution to present Exhibit A: coffee and snacks."
-  ],
-  [
-    "🥹",
-    "EXCELLENT DECISION THEORY",
-    "Imagine saying yes. Congratulations, you're already making excellent decisions."
-  ],
-  [
-    "💀",
-    "DEVELOPMENT COSTS",
-    "I've written more code for this invitation than some people write essays."
-  ],
-  [
-    "🛰️",
-    "COFFEE PROPAGANDA",
-    "One coffee. A few laughs. Potentially an elite beverage-related memory."
-  ],
-  [
-    "😭",
-    "NO SUBSCRIPTION REQUIRED",
-    "THE COFFEE ISN'T EVEN ASKING YOU TO PAY A MONTHLY SUBSCRIPTION!"
-  ],
-  [
-    "🤝",
-    "COUNTEROFFER",
-    "You say yes, and I promise not to mention this website more than 47 times."
-  ],
-  [
-    "😂",
-    "THE DIVS ARE DISAPPOINTED",
-    "Even my HTML thinks we deserve a chance. Don't disappoint the divs."
-  ],
-  [
-    "🥲",
-    "PRODUCTION BUDGET",
-    "I've animated buttons, written scripts, and negotiated with CSS. Respect the budget."
-  ],
-  [
-    "🚨",
-    "CRITICAL REJECTION LEVEL",
-    "Rejection levels are rising. The coffee department has requested emergency assistance."
-  ],
-  [
-    "🧎",
-    "FINAL APPEAL",
-    "PLEASE. THINK OF THE COFFEE BEANS. THEY DID NOTHING WRONG."
-  ]
-  /* The 15th press no longer shows a toast. It triggers the Domain Expansion sequence. */
+  ["👀","OBJECTION!","Are you sure? We haven't even had the coffee yet!"],
+  ["☕","A VERY IMPORTANT ANNOUNCEMENT","Coffee, good vibes, and absolutely no awkward interviews. Consider the offer."],
+  ["😭","THE EFFORT!","I even made a whole website for this. THE WEBSITE HAS CSS!"],
+  ["🤨","PREMIUM OFFER","You're rejecting a premium coffee experience? In THIS economy?"],
+  ["📣","FORMAL OPENING STATEMENT","Please allow the prosecution to present Exhibit A: coffee and snacks."],
+  ["🥹","EXCELLENT DECISION THEORY","Imagine saying yes. Congratulations, you're already making excellent decisions."],
+  ["💀","DEVELOPMENT COSTS","I've written more code for this invitation than some people write essays."],
+  ["🛰️","COFFEE PROPAGANDA","One coffee. A few laughs. Potentially an elite beverage-related memory."],
+  ["😭","NO SUBSCRIPTION REQUIRED","THE COFFEE ISN'T EVEN ASKING YOU TO PAY A MONTHLY SUBSCRIPTION!"],
+  ["🤝","COUNTEROFFER","You say yes, and I promise not to mention this website more than 47 times."],
+  ["😂","THE DIVS ARE DISAPPOINTED","Even my HTML thinks we deserve a chance. Don't disappoint the divs."],
+  ["🥲","PRODUCTION BUDGET","I've animated buttons, written scripts, and negotiated with CSS. Respect the budget."],
+  ["🚨","CRITICAL REJECTION LEVEL","Rejection levels are rising. The coffee department has requested emergency assistance."],
+  ["🧎","FINAL APPEAL","PLEASE. THINK OF THE COFFEE BEANS. THEY DID NOTHING WRONG."]
 ];
 
-const DOMAIN_AT = 15;
+const DOMAIN_AT = 5;
+const WARNING_AT = 4;
 
 let noAttempts = 0;
 let answer = "";
@@ -877,821 +181,270 @@ let selectedMessage = "";
 let isSubmitting = false;
 let popupOnFinal = false;
 let startedAt = null;
-
 let toastTimer = null;
 let toastHideTimer = null;
 let toastSequence = 0;
-let finalConversionTimer = null;
-
 let domainRunning = false;
 let particleRaf = 0;
 
 const $ = id => document.getElementById(id);
-
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function wait(ms) {
-  return new Promise(resolve => {
-    setTimeout(resolve, reduceMotion ? ms * 0.35 : ms);
-  });
-}
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,reduceMotion?ms*.35:ms))}
+function vibrate(ms=40){try{if("vibrate" in navigator)navigator.vibrate(ms)}catch(e){}}
+function startExperience(){startedAt=new Date().toISOString();showPage("question",1);vibrate(25)}
 
-function vibrate(ms = 40) {
-  try {
-    if ("vibrate" in navigator) {
-      navigator.vibrate(ms);
-    }
-  } catch (e) {}
-}
-
-function startExperience() {
-  startedAt = new Date().toISOString();
-  showPage("question", 1);
-  vibrate(25);
-}
-
-function showPage(id, step) {
-  document.querySelectorAll("main section").forEach(section => {
-    section.classList.add("hidden");
-  });
-
+function showPage(id,step){
+  document.querySelectorAll("main section").forEach(section=>section.classList.add("hidden"));
   $(id).classList.remove("hidden");
-
-  const progressWidths = {
-    landing: 0,
-    question: 20,
-    schedule: 50,
-    final: 80,
-    success: 100
-  };
-
-  $("progress").style.width = (progressWidths[id] || 0) + "%";
-
-  $("progress").parentElement.classList.toggle(
-    "hidden",
-    id === "landing" || id === "success"
-  );
-
+  const widths={landing:0,question:20,schedule:50,final:80,success:100};
+  $("progress").style.width=(widths[id]||0)+"%";
+  $("progress").parentElement.classList.toggle("hidden",id==="landing"||id==="success");
   $("scheduleError").classList.add("hidden");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-/* -----------------------------------------
-   RANDOM TOAST POPUP SYSTEM
------------------------------------------ */
-
-function showToast(message, duration = 2600) {
-  const toast = $("toastPopup");
-
-  clearTimeout(toastTimer);
-  clearTimeout(toastHideTimer);
-
-  const currentSequence = ++toastSequence;
-
-  $("toastIcon").textContent = message[0];
-  $("toastTitle").textContent = message[1];
-  $("toastText").textContent = message[2];
-
-  // Reset the previous position before measuring the new toast.
-  toast.classList.remove("show");
-  toast.classList.remove("hidden");
-
-  toast.style.left = "12px";
-  toast.style.right = "auto";
-  toast.style.top = "12px";
-  toast.style.bottom = "auto";
-
-  // Allow the browser to calculate the toast's dimensions.
-  requestAnimationFrame(() => {
-    if (currentSequence !== toastSequence) return;
-
-    const rect = toast.getBoundingClientRect();
-
-    const margin = 12;
-    const safeTop = Math.max(
-      margin,
-      Number.parseInt(
-        getComputedStyle(document.documentElement)
-          .getPropertyValue("padding-top"),
-        10
-      ) || 0
-    );
-
-    const maxLeft = Math.max(
-      margin,
-      window.innerWidth - rect.width - margin
-    );
-
-    const maxTop = Math.max(
-      safeTop,
-      window.innerHeight - rect.height - margin
-    );
-
-    // Randomly choose a screen position.
-    // The toast remains fully inside the visible viewport.
-    const positions = [
-      () => ({
-        left: margin,
-        top: safeTop
-      }),
-      () => ({
-        left: maxLeft,
-        top: safeTop
-      }),
-      () => ({
-        left: margin,
-        top: maxTop
-      }),
-      () => ({
-        left: maxLeft,
-        top: maxTop
-      }),
-      () => ({
-        left: Math.max(
-          margin,
-          Math.min(
-            maxLeft,
-            (window.innerWidth - rect.width) / 2
-          )
-        ),
-        top: Math.max(
-          safeTop,
-          Math.min(
-            maxTop,
-            window.innerHeight * 0.35
-          )
-        )
-      })
+/* Floating toast system */
+function showToast(message,duration=2600,warning=false){
+  const toast=$("toastPopup");
+  clearTimeout(toastTimer);clearTimeout(toastHideTimer);
+  const sequence=++toastSequence;
+  $("toastIcon").textContent=message[0];
+  $("toastTitle").textContent=message[1];
+  $("toastText").textContent=message[2];
+  toast.classList.remove("show","hidden");
+  toast.classList.toggle("warning",warning);
+  toast.style.left="12px";toast.style.right="auto";toast.style.top="12px";toast.style.bottom="auto";
+  requestAnimationFrame(()=>{
+    if(sequence!==toastSequence)return;
+    const rect=toast.getBoundingClientRect(),margin=12;
+    const safeTop=Math.max(margin,Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue("padding-top"),10)||0);
+    const maxLeft=Math.max(margin,window.innerWidth-rect.width-margin);
+    const maxTop=Math.max(safeTop,window.innerHeight-rect.height-margin);
+    const positions=[
+      ()=>({left:margin,top:safeTop}),()=>({left:maxLeft,top:safeTop}),
+      ()=>({left:margin,top:maxTop}),()=>({left:maxLeft,top:maxTop}),
+      ()=>({left:Math.max(margin,Math.min(maxLeft,(window.innerWidth-rect.width)/2)),top:Math.max(safeTop,Math.min(maxTop,window.innerHeight*.35))})
     ];
-
-    const position =
-      positions[Math.floor(Math.random() * positions.length)]();
-
-    toast.style.left = position.left + "px";
-    toast.style.top = position.top + "px";
-
-    requestAnimationFrame(() => {
-      if (currentSequence !== toastSequence) return;
-
-      toast.classList.add("show");
-    });
+    const pos=positions[Math.floor(Math.random()*positions.length)]();
+    toast.style.left=pos.left+"px";toast.style.top=pos.top+"px";
+    requestAnimationFrame(()=>{if(sequence===toastSequence)toast.classList.add("show")});
   });
-
-  toastTimer = setTimeout(() => {
-    if (currentSequence !== toastSequence) return;
-
+  toastTimer=setTimeout(()=>{
+    if(sequence!==toastSequence)return;
     toast.classList.remove("show");
-
-    toastHideTimer = setTimeout(() => {
-      if (currentSequence !== toastSequence) return;
-
-      toast.classList.add("hidden");
-    }, 350);
-
-  }, duration);
+    toastHideTimer=setTimeout(()=>{if(sequence===toastSequence)toast.classList.add("hidden")},350);
+  },duration);
 }
 
-function hideToastNow() {
-  clearTimeout(toastTimer);
-  clearTimeout(toastHideTimer);
-
-  toastSequence++;
-
-  $("toastPopup").classList.remove("show");
+function hideToastNow(){
+  clearTimeout(toastTimer);clearTimeout(toastHideTimer);toastSequence++;
+  $("toastPopup").classList.remove("show","warning");
   $("toastPopup").classList.add("hidden");
 }
 
-/* -----------------------------------------
-   THE ESCAPING NO BUTTON
------------------------------------------ */
-
-function moveNoButton() {
-  const noBtn = $("noBtn");
-
-  if (!noBtn || noBtn.dataset.converted === "true") {
-    return;
+/* Escaping NO button */
+function moveNoButton(){
+  const button=$("noBtn");
+  if(!button||button.dataset.converted==="true")return;
+  button.classList.add("escaping");
+  const rect=button.getBoundingClientRect(),margin=12;
+  const minX=margin,minY=margin;
+  const maxX=Math.max(minX,window.innerWidth-rect.width-margin);
+  const maxY=Math.max(minY,window.innerHeight-rect.height-margin);
+  let x=minX,y=minY;
+  for(let attempt=0;attempt<15;attempt++){
+    x=minX+Math.random()*(maxX-minX);y=minY+Math.random()*(maxY-minY);
+    if(Math.hypot(x-rect.left,y-rect.top)>110)break;
   }
-
-  // Remove the button from its normal flex layout.
-  noBtn.classList.add("escaping");
-
-  const rect = noBtn.getBoundingClientRect();
-
-  const margin = 12;
-
-  const minX = margin;
-  const minY = margin;
-
-  const maxX = Math.max(
-    minX,
-    window.innerWidth - rect.width - margin
-  );
-
-  const maxY = Math.max(
-    minY,
-    window.innerHeight - rect.height - margin
-  );
-
-  // Generate a random position within the screen.
-  let x = minX;
-  let y = minY;
-
-  const currentX = rect.left;
-  const currentY = rect.top;
-
-  // Try several positions so the button doesn't simply
-  // reappear almost exactly where it was.
-  for (let attempt = 0; attempt < 15; attempt++) {
-    x = minX + Math.random() * (maxX - minX);
-    y = minY + Math.random() * (maxY - minY);
-
-    const distance = Math.hypot(
-      x - currentX,
-      y - currentY
-    );
-
-    if (distance > 110) {
-      break;
-    }
-  }
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+  button.style.left=x+"px";button.style.top=y+"px";
 }
 
-/* -----------------------------------------
-   DOMAIN EXPANSION
------------------------------------------ */
-
-function startParticles() {
-  if (reduceMotion) return;
-
-  const canvas = $("domainFx");
-  const ctx = canvas.getContext("2d");
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-
-  canvas.width = Math.floor(window.innerWidth * dpr);
-  canvas.height = Math.floor(window.innerHeight * dpr);
-
-  const particles = [];
-
-  for (let i = 0; i < 80; i++) {
-    particles.push({
-      x: Math.random(),
-      y: Math.random(),
-      r: .6 + Math.random() * 1.8,
-      v: .04 + Math.random() * .1,
-      a: Math.random() * 6.28
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#8fdcff";
-    ctx.globalAlpha = .8;
-
-    for (const p of particles) {
-      p.y -= p.v / 60;
-      p.a += .01;
-      p.x += Math.sin(p.a) * .0006;
-
-      if (p.y < 0) {
-        p.y = 1;
-        p.x = Math.random();
-      }
-
-      ctx.beginPath();
-      ctx.arc(p.x * canvas.width, p.y * canvas.height, p.r * dpr, 0, 6.283);
-      ctx.fill();
+/* Domain Expansion animation */
+function startParticles(){
+  if(reduceMotion)return;
+  const canvas=$("domainFx"),ctx=canvas.getContext("2d"),dpr=Math.min(window.devicePixelRatio||1,1.5);
+  canvas.width=Math.floor(window.innerWidth*dpr);canvas.height=Math.floor(window.innerHeight*dpr);
+  const particles=[];
+  for(let i=0;i<80;i++)particles.push({x:Math.random(),y:Math.random(),r:.6+Math.random()*1.8,v:.04+Math.random()*.1,a:Math.random()*6.28});
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#8fdcff";ctx.globalAlpha=.8;
+    for(const p of particles){
+      p.y-=p.v/60;p.a+=.01;p.x+=Math.sin(p.a)*.0006;
+      if(p.y<0){p.y=1;p.x=Math.random()}
+      ctx.beginPath();ctx.arc(p.x*canvas.width,p.y*canvas.height,p.r*dpr,0,6.283);ctx.fill();
     }
-
-    particleRaf = requestAnimationFrame(draw);
+    particleRaf=requestAnimationFrame(draw);
   }
-
   draw();
 }
-
-function stopParticles() {
-  cancelAnimationFrame(particleRaf);
-  particleRaf = 0;
-
-  const canvas = $("domainFx");
-  canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+function stopParticles(){
+  cancelAnimationFrame(particleRaf);particleRaf=0;
+  const canvas=$("domainFx");canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
 }
-
-function shakeCard() {
-  const card = document.querySelector("main.card");
-
-  if (reduceMotion || !card.animate) return;
-
-  // Web Animations API, so the card's own entrance animation is not restarted.
-  card.animate(
-    [
-      { transform: "translate(0, 0)" },
-      { transform: "translate(-2px, 1px)", offset: .1 },
-      { transform: "translate(4px, -2px)", offset: .3 },
-      { transform: "translate(-4px, 2px)", offset: .5 },
-      { transform: "translate(4px, -2px)", offset: .7 },
-      { transform: "translate(-2px, 1px)", offset: .9 },
-      { transform: "translate(0, 0)" }
-    ],
-    { duration: 700 }
-  );
+function shakeCard(){
+  const card=document.querySelector("main.card");
+  if(reduceMotion||!card.animate)return;
+  card.animate([
+    {transform:"translate(0,0)"},{transform:"translate(-2px,1px)",offset:.1},
+    {transform:"translate(4px,-2px)",offset:.3},{transform:"translate(-4px,2px)",offset:.5},
+    {transform:"translate(4px,-2px)",offset:.7},{transform:"translate(-2px,1px)",offset:.9},
+    {transform:"translate(0,0)"}
+  ],{duration:700});
 }
-
-async function typeTerminal(lines) {
-  const box = $("domainTerm");
-
-  box.classList.remove("hidden");
-
-  for (const text of lines) {
-    const row = document.createElement("div");
-    box.appendChild(row);
-
-    if (reduceMotion) {
-      row.textContent = "> " + text;
-    } else {
-      for (let i = 1; i <= text.length; i++) {
-        row.textContent = "> " + text.slice(0, i);
-        await new Promise(resolve => setTimeout(resolve, 12));
-      }
-    }
-
-    box.scrollTop = box.scrollHeight;
-
-    await wait(250);
+async function typeTerminal(lines){
+  const box=$("domainTerm");box.classList.remove("hidden");
+  for(const text of lines){
+    const row=document.createElement("div");box.appendChild(row);
+    if(reduceMotion)row.textContent="> "+text;
+    else for(let i=1;i<=text.length;i++){row.textContent="> "+text.slice(0,i);await new Promise(resolve=>setTimeout(resolve,12))}
+    box.scrollTop=box.scrollHeight;await wait(250);
   }
 }
-
-function becomeCaughtButton() {
-  const noBtn = $("noBtn");
-
-  noBtn.dataset.converted = "true";
-
-  // Back into the normal button row: no dodging, no overlap, always on screen.
-  noBtn.classList.remove("no", "escaping");
-  noBtn.classList.add("yes", "caught");
-  noBtn.style.left = "";
-  noBtn.style.top = "";
-
-  noBtn.textContent = "YOU'VE BEEN CAUGHT 💀";
-
-  // Same outcome the original recovery had: a deliberate click chooses YES.
-  noBtn.onclick = function () {
-    chooseAnswer("Yes");
-  };
-
-  $("noNotice").textContent =
-    "INFINITY HOLDS. THE NO BUTTON HAS BEEN CAUGHT. ☕";
+function becomeCaughtButton(){
+  const button=$("noBtn");
+  button.dataset.converted="true";
+  button.classList.remove("no","escaping");button.classList.add("yes","caught");
+  button.style.left="";button.style.top="";
+  button.textContent="YOU'VE BEEN CAUGHT 💀";
+  button.onclick=function(){chooseAnswer("Yes")};
+  $("noNotice").textContent="INFINITY HOLDS. THE NO BUTTON HAS BEEN CAUGHT. ☕";
 }
-
-async function startDomainExpansion() {
-  if (domainRunning) return;
-
-  domainRunning = true;
-  popupOnFinal = true;
-
-  const card = document.querySelector("main.card");
-  const overlay = $("domainOverlay");
-  const alertBox = $("domainAlert");
-  const noBtn = $("noBtn");
-
-  hideToastNow();
-
-  // Lock the page underneath: no clicks, no keyboard, no accidental YES or submit.
-  card.inert = true;
-  noBtn.disabled = true;
-
-  overlay.className = "domain-overlay";
-  alertBox.textContent = "";
-
-  // PHASE 1: system alert
-  const alertLines = [
-    "WARNING: USER RESISTANCE DETECTED.",
-    "SIX EYES ACTIVATED.",
-    "INFINITY PROTOCOL INITIALIZING..."
-  ];
-
-  for (const line of alertLines) {
-    alertBox.textContent += (alertBox.textContent ? "\n" : "") + line;
-    await wait(1100);
-  }
-
-  // PHASE 2: screen transformation
-  overlay.classList.add("p2");
-  vibrate([80, 40, 120]);
-  shakeCard();
-  startParticles();
-
+async function startDomainExpansion(){
+  if(domainRunning)return;
+  domainRunning=true;popupOnFinal=true;
+  const card=document.querySelector("main.card"),overlay=$("domainOverlay"),alertBox=$("domainAlert"),noBtn=$("noBtn");
+  hideToastNow();card.inert=true;noBtn.disabled=true;
+  overlay.className="domain-overlay";alertBox.textContent="";
+  const lines=["WARNING: USER RESISTANCE DETECTED.","SIX EYES ACTIVATED.","INFINITY PROTOCOL INITIALIZING..."];
+  for(const line of lines){alertBox.textContent+=(alertBox.textContent?"\n":"")+line;await wait(1100)}
+  overlay.classList.add("p2");vibrate([80,40,120]);shakeCard();startParticles();
   await wait(1500);
-
-  // PHASE 3: the announcement
   overlay.classList.add("p3");
-
   await wait(3800);
-
-  // Return to the invitation
-  overlay.classList.add("out");
-
-  await wait(700);
-
-  overlay.className = "domain-overlay hidden";
-  stopParticles();
-
-  // PHASE 4: NO button transformation
-  becomeCaughtButton();
-
-  card.inert = false;
-  domainRunning = false;
-
-  $("questionButtons").querySelector(".yes").focus({ preventScroll: true });
-
-  // Short guard so a late tap cannot land on the new button.
-  setTimeout(() => {
-    noBtn.disabled = false;
-  }, reduceMotion ? 200 : 700);
-
-  // PHASE 5: terminal update
+  overlay.classList.add("out");await wait(700);
+  overlay.className="domain-overlay hidden";stopParticles();
+  becomeCaughtButton();card.inert=false;domainRunning=false;
+  $("questionButtons").querySelector(".yes").focus({preventScroll:true});
+  setTimeout(()=>{noBtn.disabled=false},reduceMotion?200:700);
   await typeTerminal([
-    "NO ATTEMPT #15 DETECTED.",
-    "RESISTANCE LEVEL: MAXIMUM.",
-    "SIX EYES: ONLINE.",
-    "INFINITY: ACTIVE.",
-    "DOMAIN EXPANSION: SUCCESSFUL.",
-    "TARGET RESPONSE: PENDING."
+    "NO ATTEMPT #5 DETECTED.","RESISTANCE LEVEL: MAXIMUM.","SIX EYES: ONLINE.",
+    "INFINITY: ACTIVE.","DOMAIN EXPANSION: SUCCESSFUL.","TARGET RESPONSE: PENDING."
   ]);
 }
 
-function pressNo() {
-  // Locked once the Domain Expansion starts, so the counter can never pass 15.
-  if (popupOnFinal || domainRunning) return;
-
-  noAttempts++;
-
-  vibrate(40);
-
-  // The trigger is EXACTLY the 15th press.
-  if (noAttempts === DOMAIN_AT) {
-    startDomainExpansion();
-    return;
+function pressNo(){
+  if(popupOnFinal||domainRunning)return;
+  noAttempts++;vibrate(40);
+  if(noAttempts===DOMAIN_AT){startDomainExpansion();return}
+  if(noAttempts===WARNING_AT){
+    const warning=["⚠️","FINAL WARNING","BAD DECISION DETECTED. GOJO SATORU IS NO LONGER PLAYING AROUND. ♾️"];
+    showToast(warning,4500,true);
+    $("noNotice").textContent="⚠️ FINAL WARNING ISSUED. INFINITY PROTOCOL IMMINENT.";
+    moveNoButton();return;
   }
-
-  const message = noPopups[
-    Math.min(noAttempts - 1, noPopups.length - 1)
-  ];
-
-  // Every NO press gets its own small floating message.
-  showToast(message, 2500);
-
-  // The button escapes after each press, until the Domain Expansion.
+  const message=noPopups[Math.min(noAttempts-1,noPopups.length-1)];
+  showToast(message,2500);
   moveNoButton();
 }
 
-/* -----------------------------------------
-   ANSWER AND SCHEDULING
------------------------------------------ */
-
-function chooseAnswer(value) {
-  // Ignore YES while the Domain Expansion is playing.
-  if (domainRunning) return;
-
-  // Cancel a pending transformation if the other YES is pressed.
-  if (value === "Yes") {
-    clearTimeout(finalConversionTimer);
-  }
-
-  answer = value;
-
-  const yes = value === "Yes";
-
-  $("scheduleTitle").textContent = yes
-    ? "Awesome! When are you free?"
-    : "Okay, message received. If you did want to plan something, what would work for you?";
-
-  $("scheduleSubtitle").textContent = yes
-    ? "Pick a day, time, and vibe that works for you."
-    : "No pressure. You can still choose a date for the record, or leave the page.";
-
-  // Reset the escaping button when leaving the question.
-  const noBtn = $("noBtn");
-
-  if (noBtn && noBtn.dataset.converted !== "true") {
-    noBtn.classList.remove("escaping");
-    noBtn.style.left = "";
-    noBtn.style.top = "";
-  }
-
-  showPage("schedule", 3);
-  vibrate(30);
+/* Answer and scheduling */
+function chooseAnswer(value){
+  if(domainRunning)return;
+  answer=value;
+  const yes=value==="Yes";
+  $("scheduleTitle").textContent=yes?"Awesome! When are you free?":"Okay, message received. If you did want to plan something, what would work for you?";
+  $("scheduleSubtitle").textContent=yes?"Pick a day, time, and vibe that works for you.":"No pressure. You can still choose a date for the record, or leave the page.";
+  const noBtn=$("noBtn");
+  if(noBtn&&noBtn.dataset.converted!=="true"){noBtn.classList.remove("escaping");noBtn.style.left="";noBtn.style.top=""}
+  showPage("schedule",3);vibrate(30);
+}
+function dateISO(date){return date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0")+"-"+String(date.getDate()).padStart(2,"0")}
+function initDatePicker(){
+  const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),max=new Date(today);
+  max.setDate(max.getDate()+30);
+  $("dateInput").min=dateISO(today);$("dateInput").max=dateISO(max);
+  $("dateHint").textContent="Choose today or any date within the next 30 days.";
+}
+function selectTime(button){
+  document.querySelectorAll("#timeChoices .choice").forEach(item=>item.classList.remove("selected"));
+  button.classList.add("selected");selectedTime=button.dataset.time;vibrate(20);
+}
+function selectVibe(button){
+  document.querySelectorAll("#vibeChoices .vibe").forEach(item=>item.classList.remove("selected"));
+  button.classList.add("selected");selectedVibe=button.dataset.vibe;vibrate(20);
+}
+function selectMessage(button){
+  document.querySelectorAll("#messageChoices .vibe").forEach(item=>item.classList.remove("selected"));
+  button.classList.add("selected");selectedMessage=button.dataset.message;
+  $("customMessage").classList.toggle("hidden",selectedMessage!=="__custom__");vibrate(20);
+}
+function niceDate(value){
+  if(!value)return"Not selected";
+  return new Date(value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+}
+function niceTime(value){
+  if(!value)return"Not selected";
+  const [hours,minutes]=value.split(":").map(Number);
+  return(hours%12||12)+":"+String(minutes).padStart(2,"0")+" "+(hours>=12?"PM":"AM");
 }
 
-function dateISO(date) {
-  return date.getFullYear() + "-" +
-    String(date.getMonth() + 1).padStart(2, "0") + "-" +
-    String(date.getDate()).padStart(2, "0");
-}
-
-function initDatePicker() {
-  const now = new Date();
-
-  const today = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate()
-  );
-
-  const max = new Date(today);
-  max.setDate(max.getDate() + 30);
-
-  $("dateInput").min = dateISO(today);
-  $("dateInput").max = dateISO(max);
-
-  $("dateHint").textContent =
-    "Choose today or any date within the next 30 days.";
-}
-
-function selectTime(button) {
-  document.querySelectorAll("#timeChoices .choice").forEach(item => {
-    item.classList.remove("selected");
-  });
-
-  button.classList.add("selected");
-
-  selectedTime = button.dataset.time;
-
-  vibrate(20);
-}
-
-function selectVibe(button) {
-  document.querySelectorAll("#vibeChoices .vibe").forEach(item => {
-    item.classList.remove("selected");
-  });
-
-  button.classList.add("selected");
-
-  selectedVibe = button.dataset.vibe;
-
-  vibrate(20);
-}
-
-function selectMessage(button) {
-  document.querySelectorAll("#messageChoices .vibe").forEach(item => {
-    item.classList.remove("selected");
-  });
-
-  button.classList.add("selected");
-
-  selectedMessage = button.dataset.message;
-
-  if (selectedMessage === "__custom__") {
-    $("customMessage").classList.remove("hidden");
-  } else {
-    $("customMessage").classList.add("hidden");
-  }
-
-  vibrate(20);
-}
-
-function niceDate(value) {
-  if (!value) return "Not selected";
-
-  return new Date(value + "T12:00:00").toLocaleDateString(
-    "en-US",
-    {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric"
-    }
-  );
-}
-
-function niceTime(value) {
-  if (!value) return "Not selected";
-
-  const [hours, minutes] = value.split(":").map(Number);
-
-  return (hours % 12 || 12) + ":" +
-    String(minutes).padStart(2, "0") + " " +
-    (hours >= 12 ? "PM" : "AM");
-}
-
-/* -----------------------------------------
-   FINAL SUMMARY
------------------------------------------ */
-
-function goToFinal() {
-  const date = $("dateInput").value;
-
-  if (!date) {
-    $("scheduleError").textContent =
-      "Choose a date first, captain. 📅";
-
-    $("scheduleError").classList.remove("hidden");
-    return;
-  }
-
-  if (
-    date < $("dateInput").min ||
-    date > $("dateInput").max
-  ) {
-    $("scheduleError").textContent =
-      "Please choose a date within the next 30 days.";
-
-    $("scheduleError").classList.remove("hidden");
-    return;
-  }
-
-  if (!selectedTime) {
-    $("scheduleError").textContent =
-      "The time machine needs a time. ⏰";
-
-    $("scheduleError").classList.remove("hidden");
-    return;
-  }
-
+/* Final summary */
+function goToFinal(){
+  const date=$("dateInput").value;
+  if(!date){$("scheduleError").textContent="Choose a date first, captain. 📅";$("scheduleError").classList.remove("hidden");return}
+  if(date<$("dateInput").min||date>$("dateInput").max){$("scheduleError").textContent="Please choose a date within the next 30 days.";$("scheduleError").classList.remove("hidden");return}
+  if(!selectedTime){$("scheduleError").textContent="The time machine needs a time. ⏰";$("scheduleError").classList.remove("hidden");return}
   $("summary").replaceChildren();
-
-  const rows = [
-    ["Answer", answer],
-    ["NO presses", String(noAttempts)],
-    ["Date", niceDate(date)],
-    ["Time", niceTime(selectedTime)],
-    ["Vibe", selectedVibe || "Not specified"],
-    ["Note", $("noteInput").value.trim() || "None"]
-  ];
-
-  rows.forEach(([key, value]) => {
-    const row = document.createElement("div");
-    row.className = "summary-row";
-
-    const label = document.createElement("span");
-    const result = document.createElement("strong");
-
-    label.textContent = key;
-    result.textContent = value;
-
-    row.append(label, result);
-
-    $("summary").appendChild(row);
+  const rows=[["Answer",answer],["NO presses",String(noAttempts)],["Date",niceDate(date)],["Time",niceTime(selectedTime)],["Vibe",selectedVibe||"Not specified"],["Note",$("noteInput").value.trim()||"None"]];
+  rows.forEach(([key,value])=>{
+    const row=document.createElement("div");row.className="summary-row";
+    const label=document.createElement("span"),result=document.createElement("strong");
+    label.textContent=key;result.textContent=value;row.append(label,result);$("summary").appendChild(row);
   });
-
-  showPage("final", 4);
+  showPage("final",4);
 }
 
-/* -----------------------------------------
-   SUBMISSION
------------------------------------------ */
-
-async function submitResponse() {
-  if (isSubmitting) return;
-
-  if (!answer) {
-    $("submitError").textContent =
-      "Please choose YES or NO first.";
-
-    $("submitError").classList.remove("hidden");
-    return;
-  }
-
-  if (!selectedMessage) {
-    $("submitError").textContent =
-      "Choose a final message first.";
-
-    $("submitError").classList.remove("hidden");
-    return;
-  }
-
-  const custom = selectedMessage === "__custom__"
-    ? $("customMessage").value.trim()
-    : "";
-
-  if (selectedMessage === "__custom__" && !custom) {
-    $("submitError").textContent =
-      "Write your custom message, or choose one of the other messages.";
-
-    $("submitError").classList.remove("hidden");
-    return;
-  }
-
-  const date = $("dateInput").value;
-
-  const payload = {
-    response: answer,
-    noPresses: noAttempts,
-    date: date,
-    dateLabel: niceDate(date),
-    time: selectedTime,
-    timeLabel: niceTime(selectedTime),
-    vibe: selectedVibe,
-    finalMessage: selectedMessage === "__custom__"
-      ? "Custom message"
-      : selectedMessage,
-    customMessage: custom,
-    note: $("noteInput").value.trim(),
-    source: "Coffee Evening v2.2",
-    experienceStartedAt: startedAt
+/* Submission: endpoint and payload kept unchanged */
+async function submitResponse(){
+  if(isSubmitting)return;
+  if(!answer){$("submitError").textContent="Please choose YES or NO first.";$("submitError").classList.remove("hidden");return}
+  if(!selectedMessage){$("submitError").textContent="Choose a final message first.";$("submitError").classList.remove("hidden");return}
+  const custom=selectedMessage==="__custom__"?$("customMessage").value.trim():"";
+  if(selectedMessage==="__custom__"&&!custom){$("submitError").textContent="Write your custom message, or choose one of the other messages.";$("submitError").classList.remove("hidden");return}
+  const date=$("dateInput").value;
+  const payload={
+    response:answer,noPresses:noAttempts,date:date,dateLabel:niceDate(date),time:selectedTime,timeLabel:niceTime(selectedTime),
+    vibe:selectedVibe,finalMessage:selectedMessage==="__custom__"?"Custom message":selectedMessage,customMessage:custom,
+    note:$("noteInput").value.trim(),source:"Coffee Evening v2.2",experienceStartedAt:startedAt
   };
-
-  isSubmitting = true;
-
-  $("submitBtn").disabled = true;
-  $("submitBtn").textContent = "Sending... ☕";
-  $("submitError").classList.add("hidden");
-
-  try {
-    const response = await fetch(ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify(payload),
-      mode: "cors"
-    });
-
-    if (!response.ok) {
-      throw new Error("Server returned " + response.status);
-    }
-
-    const result = await response.json();
-
-    if (!result.ok) {
-      throw new Error(
-        result.error || "The server could not save the response."
-      );
-    }
-
-    $("successTitle").textContent =
-      answer === "Yes"
-        ? "Awesome! It's official."
-        : "Message received!";
-
-    $("successText").textContent =
-      answer === "Yes"
-        ? "Looking forward to it! ☕✨ " +
-          niceDate(date) + " at " + niceTime(selectedTime) + "."
-        : "Thanks for playing along anyway. Your answer has been recorded. ☕";
-
-    showPage("success", 5);
-
-    vibrate([35, 45, 35]);
-
-  } catch (error) {
-    $("submitError").textContent =
-      "The coffee satellites lost signal. Your choices are still here, " +
-      "so please try again. 📡 (" +
-      String(error.message || error) + ")";
-
-    $("submitError").classList.remove("hidden");
-
-    isSubmitting = false;
-    $("submitBtn").disabled = false;
-    $("submitBtn").textContent = "Try Again 🚀";
+  isSubmitting=true;$("submitBtn").disabled=true;$("submitBtn").textContent="Sending... ☕";$("submitError").classList.add("hidden");
+  try{
+    const response=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),mode:"cors"});
+    if(!response.ok)throw new Error("Server returned "+response.status);
+    const result=await response.json();
+    if(!result.ok)throw new Error(result.error||"The server could not save the response.");
+    $("successTitle").textContent=answer==="Yes"?"Awesome! It's official.":"Message received!";
+    $("successText").textContent=answer==="Yes"?"Looking forward to it! ☕✨ "+niceDate(date)+" at "+niceTime(selectedTime)+".":"Thanks for playing along anyway. Your answer has been recorded. ☕";
+    showPage("success",5);vibrate([35,45,35]);
+  }catch(error){
+    $("submitError").textContent="The coffee satellites lost signal. Your choices are still here, so please try again. 📡 ("+String(error.message||error)+")";
+    $("submitError").classList.remove("hidden");isSubmitting=false;$("submitBtn").disabled=false;$("submitBtn").textContent="Try Again 🚀";
   }
 }
 
-/* -----------------------------------------
-   KEEP THE ESCAPING BUTTON ON SCREEN
------------------------------------------ */
-
-window.addEventListener("resize", () => {
-  const noBtn = $("noBtn");
-
-  if (
-    noBtn &&
-    noBtn.classList.contains("escaping") &&
-    noBtn.dataset.converted !== "true"
-  ) {
-    const rect = noBtn.getBoundingClientRect();
-    const margin = 12;
-
-    const x = Math.max(
-      margin,
-      Math.min(
-        rect.left,
-        window.innerWidth - rect.width - margin
-      )
-    );
-
-    const y = Math.max(
-      margin,
-      Math.min(
-        rect.top,
-        window.innerHeight - rect.height - margin
-      )
-    );
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+/* Keep escaping button inside the viewport */
+window.addEventListener("resize",()=>{
+  const noBtn=$("noBtn");
+  if(noBtn&&noBtn.classList.contains("escaping")&&noBtn.dataset.converted!=="true"){
+    const rect=noBtn.getBoundingClientRect(),margin=12;
+    const x=Math.max(margin,Math.min(rect.left,window.innerWidth-rect.width-margin));
+    const y=Math.max(margin,Math.min(rect.top,window.innerHeight-rect.height-margin));
+    noBtn.style.left=x+"px";noBtn.style.top=y+"px";
   }
 });
 
 initDatePicker();
 </script>
-
 </body>
 </html>
