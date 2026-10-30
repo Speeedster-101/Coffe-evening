@@ -425,6 +425,172 @@ footer {
   margin-top: 24px;
 }
 
+/* ============================================================
+   DOMAIN EXPANSION (15th NO press)
+   ============================================================ */
+.domain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 9, 18, .95);
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity .7s, background 1s;
+  font-family: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
+  color: #EDF8FF;
+}
+
+.domain-overlay.out {
+  opacity: 0;
+}
+
+.domain-overlay.p2 {
+  background: radial-gradient(circle at 50% 50%, #0f4a7a 0, #050912 70%);
+}
+
+#domainFx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.d-alert {
+  position: relative;
+  font: 700 clamp(.9rem, 3.2vw, 1.3rem)/1.8 ui-monospace, Consolas, monospace;
+  color: #B8EAFF;
+  letter-spacing: .08em;
+  padding: 20px;
+  text-align: left;
+  white-space: pre-wrap;
+  transition: opacity .5s;
+}
+
+.domain-overlay.p2 .d-alert {
+  opacity: 0;
+}
+
+.d-flash {
+  position: absolute;
+  inset: 0;
+  background: #35BAFF;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.domain-overlay.p2 .d-flash {
+  animation: dFlash .5s ease-out;
+}
+
+@keyframes dFlash {
+  0% { opacity: .5; }
+  100% { opacity: 0; }
+}
+
+.d-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22vmin;
+  height: 22vmin;
+  margin: -11vmin 0 0 -11vmin;
+  border: 2px solid #35BAFF;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 30px #35BAFF, inset 0 0 30px rgba(53, 186, 255, .4);
+}
+
+.domain-overlay.p2 .d-ring {
+  animation: dRing 2s ease-out forwards;
+}
+
+.domain-overlay.p2 .d-ring.r2 {
+  animation-delay: .35s;
+}
+
+@keyframes dRing {
+  0% { transform: scale(.2); opacity: .9; }
+  100% { transform: scale(8); opacity: 0; }
+}
+
+.d-title {
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  padding: 0 14px;
+}
+
+.domain-overlay.p3 .d-title {
+  animation: dRise 1s forwards;
+}
+
+@keyframes dRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.d-title h2 {
+  margin: 0;
+  font-size: clamp(2rem, 10vw, 5.5rem);
+  line-height: 1.05;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  text-shadow: 0 0 24px #35BAFF, 0 0 60px rgba(53, 186, 255, .6);
+  animation: dSpace 3.2s ease-out both;
+  animation-play-state: paused;
+}
+
+.domain-overlay.p3 .d-title h2 {
+  animation-play-state: running;
+}
+
+@keyframes dSpace {
+  from { letter-spacing: .7em; }
+  to { letter-spacing: .08em; }
+}
+
+.d-title p {
+  margin: 14px 0 0;
+  font-size: clamp(1.2rem, 5vw, 2.2rem);
+  color: #B8EAFF;
+  letter-spacing: .12em;
+}
+
+.d-title small {
+  display: block;
+  margin-top: 16px;
+  letter-spacing: .3em;
+  color: #35BAFF;
+  font-size: clamp(.7rem, 2.6vw, .95rem);
+}
+
+/* Terminal shown after the sequence */
+.domain-term {
+  text-align: left;
+  background: #0b1626;
+  color: #B8EAFF;
+  border: 1px solid #35BAFF;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 16px;
+  max-height: 170px;
+  overflow: auto;
+  font: 12px/1.6 ui-monospace, Consolas, monospace;
+  overflow-wrap: anywhere;
+}
+
+/* The NO button after it has been caught */
+.yes.caught {
+  background: #0b1626;
+  color: #B8EAFF;
+  border: 1px solid #35BAFF;
+  box-shadow: 0 7px 0 #14344f, 0 0 18px rgba(53, 186, 255, .35);
+}
+
 @media(max-width: 380px) {
   .choice-grid {
     gap: 6px;
@@ -457,6 +623,12 @@ footer {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
+  }
+
+  .d-ring,
+  .d-flash,
+  #domainFx {
+    display: none;
   }
 }
 </style>
@@ -494,6 +666,8 @@ footer {
     <p class="notice" id="noNotice">
       The NO button has free will. Its excuses, however, are questionable. 💀
     </p>
+
+    <div id="domainTerm" class="domain-term hidden" role="log" aria-live="polite" aria-label="System terminal"></div>
   </section>
 
   <section id="schedule" class="hidden">
@@ -600,6 +774,20 @@ footer {
   </div>
 </div>
 
+<!-- Domain Expansion overlay (shown only during the 15th-press sequence) -->
+<div id="domainOverlay" class="domain-overlay hidden" aria-live="assertive">
+  <canvas id="domainFx" aria-hidden="true"></canvas>
+  <div class="d-flash"></div>
+  <div class="d-ring"></div>
+  <div class="d-ring r2"></div>
+  <div id="domainAlert" class="d-alert"></div>
+  <div class="d-title">
+    <h2>Domain Expansion</h2>
+    <p>YOU ARE COMING. ♾️</p>
+    <small>INFINITY PROTOCOL ACTIVATED.</small>
+  </div>
+</div>
+
 <script>
 "use strict";
 
@@ -675,13 +863,11 @@ const noPopups = [
     "🧎",
     "FINAL APPEAL",
     "PLEASE. THINK OF THE COFFEE BEANS. THEY DID NOTHING WRONG."
-  ],
-  [
-    "💀",
-    "SYSTEM ERROR: NO BUTTON OVERLOADED",
-    "15 rejections detected. Coffee.exe has stopped responding. Attempting emergency YES protocol..."
   ]
+  /* The 15th press no longer shows a toast. It triggers the Domain Expansion sequence. */
 ];
+
+const DOMAIN_AT = 15;
 
 let noAttempts = 0;
 let answer = "";
@@ -697,7 +883,18 @@ let toastHideTimer = null;
 let toastSequence = 0;
 let finalConversionTimer = null;
 
+let domainRunning = false;
+let particleRaf = 0;
+
 const $ = id => document.getElementById(id);
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, reduceMotion ? ms * 0.35 : ms);
+  });
+}
 
 function vibrate(ms = 40) {
   try {
@@ -858,6 +1055,16 @@ function showToast(message, duration = 2600) {
   }, duration);
 }
 
+function hideToastNow() {
+  clearTimeout(toastTimer);
+  clearTimeout(toastHideTimer);
+
+  toastSequence++;
+
+  $("toastPopup").classList.remove("show");
+  $("toastPopup").classList.add("hidden");
+}
+
 /* -----------------------------------------
    THE ESCAPING NO BUTTON
 ----------------------------------------- */
@@ -916,61 +1123,232 @@ function moveNoButton() {
   noBtn.style.top = y + "px";
 }
 
-function convertNoToYes() {
+/* -----------------------------------------
+   DOMAIN EXPANSION
+----------------------------------------- */
+
+function startParticles() {
+  if (reduceMotion) return;
+
+  const canvas = $("domainFx");
+  const ctx = canvas.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+  canvas.width = Math.floor(window.innerWidth * dpr);
+  canvas.height = Math.floor(window.innerHeight * dpr);
+
+  const particles = [];
+
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random(),
+      y: Math.random(),
+      r: .6 + Math.random() * 1.8,
+      v: .04 + Math.random() * .1,
+      a: Math.random() * 6.28
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#8fdcff";
+    ctx.globalAlpha = .8;
+
+    for (const p of particles) {
+      p.y -= p.v / 60;
+      p.a += .01;
+      p.x += Math.sin(p.a) * .0006;
+
+      if (p.y < 0) {
+        p.y = 1;
+        p.x = Math.random();
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x * canvas.width, p.y * canvas.height, p.r * dpr, 0, 6.283);
+      ctx.fill();
+    }
+
+    particleRaf = requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+function stopParticles() {
+  cancelAnimationFrame(particleRaf);
+  particleRaf = 0;
+
+  const canvas = $("domainFx");
+  canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function shakeCard() {
+  const card = document.querySelector("main.card");
+
+  if (reduceMotion || !card.animate) return;
+
+  // Web Animations API, so the card's own entrance animation is not restarted.
+  card.animate(
+    [
+      { transform: "translate(0, 0)" },
+      { transform: "translate(-2px, 1px)", offset: .1 },
+      { transform: "translate(4px, -2px)", offset: .3 },
+      { transform: "translate(-4px, 2px)", offset: .5 },
+      { transform: "translate(4px, -2px)", offset: .7 },
+      { transform: "translate(-2px, 1px)", offset: .9 },
+      { transform: "translate(0, 0)" }
+    ],
+    { duration: 700 }
+  );
+}
+
+async function typeTerminal(lines) {
+  const box = $("domainTerm");
+
+  box.classList.remove("hidden");
+
+  for (const text of lines) {
+    const row = document.createElement("div");
+    box.appendChild(row);
+
+    if (reduceMotion) {
+      row.textContent = "> " + text;
+    } else {
+      for (let i = 1; i <= text.length; i++) {
+        row.textContent = "> " + text.slice(0, i);
+        await new Promise(resolve => setTimeout(resolve, 12));
+      }
+    }
+
+    box.scrollTop = box.scrollHeight;
+
+    await wait(250);
+  }
+}
+
+function becomeCaughtButton() {
   const noBtn = $("noBtn");
-
-  if (!noBtn) return;
-
-  clearTimeout(finalConversionTimer);
-
-  popupOnFinal = true;
 
   noBtn.dataset.converted = "true";
 
-  noBtn.classList.remove("no");
-  noBtn.classList.add("yes");
+  // Back into the normal button row: no dodging, no overlap, always on screen.
+  noBtn.classList.remove("no", "escaping");
+  noBtn.classList.add("yes", "caught");
+  noBtn.style.left = "";
+  noBtn.style.top = "";
 
-  noBtn.textContent = "YES 😌";
+  noBtn.textContent = "YOU'VE BEEN CAUGHT 💀";
 
-  // Keep it in its escaped position, but make it a working YES.
+  // Same outcome the original recovery had: a deliberate click chooses YES.
   noBtn.onclick = function () {
     chooseAnswer("Yes");
   };
 
   $("noNotice").textContent =
-    "SYSTEM RECOVERY COMPLETE. TWO YES BUTTONS DETECTED. ☕";
+    "INFINITY HOLDS. THE NO BUTTON HAS BEEN CAUGHT. ☕";
+}
 
-  vibrate([60, 40, 100]);
+async function startDomainExpansion() {
+  if (domainRunning) return;
+
+  domainRunning = true;
+  popupOnFinal = true;
+
+  const card = document.querySelector("main.card");
+  const overlay = $("domainOverlay");
+  const alertBox = $("domainAlert");
+  const noBtn = $("noBtn");
+
+  hideToastNow();
+
+  // Lock the page underneath: no clicks, no keyboard, no accidental YES or submit.
+  card.inert = true;
+  noBtn.disabled = true;
+
+  overlay.className = "domain-overlay";
+  alertBox.textContent = "";
+
+  // PHASE 1: system alert
+  const alertLines = [
+    "WARNING: USER RESISTANCE DETECTED.",
+    "SIX EYES ACTIVATED.",
+    "INFINITY PROTOCOL INITIALIZING..."
+  ];
+
+  for (const line of alertLines) {
+    alertBox.textContent += (alertBox.textContent ? "\n" : "") + line;
+    await wait(1100);
+  }
+
+  // PHASE 2: screen transformation
+  overlay.classList.add("p2");
+  vibrate([80, 40, 120]);
+  shakeCard();
+  startParticles();
+
+  await wait(1500);
+
+  // PHASE 3: the announcement
+  overlay.classList.add("p3");
+
+  await wait(3800);
+
+  // Return to the invitation
+  overlay.classList.add("out");
+
+  await wait(700);
+
+  overlay.className = "domain-overlay hidden";
+  stopParticles();
+
+  // PHASE 4: NO button transformation
+  becomeCaughtButton();
+
+  card.inert = false;
+  domainRunning = false;
+
+  $("questionButtons").querySelector(".yes").focus({ preventScroll: true });
+
+  // Short guard so a late tap cannot land on the new button.
+  setTimeout(() => {
+    noBtn.disabled = false;
+  }, reduceMotion ? 200 : 700);
+
+  // PHASE 5: terminal update
+  await typeTerminal([
+    "NO ATTEMPT #15 DETECTED.",
+    "RESISTANCE LEVEL: MAXIMUM.",
+    "SIX EYES: ONLINE.",
+    "INFINITY: ACTIVE.",
+    "DOMAIN EXPANSION: SUCCESSFUL.",
+    "TARGET RESPONSE: PENDING."
+  ]);
 }
 
 function pressNo() {
-  if (popupOnFinal) return;
+  // Locked once the Domain Expansion starts, so the counter can never pass 15.
+  if (popupOnFinal || domainRunning) return;
 
   noAttempts++;
 
   vibrate(40);
+
+  // The trigger is EXACTLY the 15th press.
+  if (noAttempts === DOMAIN_AT) {
+    startDomainExpansion();
+    return;
+  }
 
   const message = noPopups[
     Math.min(noAttempts - 1, noPopups.length - 1)
   ];
 
   // Every NO press gets its own small floating message.
-  showToast(message, noAttempts === 15 ? 3500 : 2500);
+  showToast(message, 2500);
 
-  // The button escapes after each press, until conversion.
-  if (noAttempts < 15) {
-    moveNoButton();
-    return;
-  }
-
-  // The final NO press triggers the system-error sequence.
-  $("noNotice").textContent =
-    "CRITICAL ERROR: THE NO BUTTON HAS EXCEEDED ITS AUTHORIZED LIMIT. 💀";
-
-  // Allow the error message to appear before the transformation.
-  finalConversionTimer = setTimeout(() => {
-    convertNoToYes();
-  }, 1900);
+  // The button escapes after each press, until the Domain Expansion.
+  moveNoButton();
 }
 
 /* -----------------------------------------
@@ -978,6 +1356,9 @@ function pressNo() {
 ----------------------------------------- */
 
 function chooseAnswer(value) {
+  // Ignore YES while the Domain Expansion is playing.
+  if (domainRunning) return;
+
   // Cancel a pending transformation if the other YES is pressed.
   if (value === "Yes") {
     clearTimeout(finalConversionTimer);
@@ -1313,4 +1694,4 @@ initDatePicker();
 </script>
 
 </body>
-    </html>
+</html>
